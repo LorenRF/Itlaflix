@@ -1,0 +1,40 @@
+﻿@model Itlaflix.Core.Application.ViewModel.SerieViewModel
+
+@{
+    ViewData["Title"] = "Series";
+}
+
+<div class=" = "row mb-3">
+    <h2 class="text-center">Welcome to Itlaflix</h2>
+</div>
+<div class="row">
+    <div class="col-4 offset-4">
+        <div class="card">
+            <div class="card-header bg-primary text-light">
+                example
+            </div>
+            <div class="card-body">
+
+                <form method="post">
+                    <div class="mb-3">
+                        <label asp-for="Name" class="form-label">
+                            Name:
+                        </label>
+                        <input asp-for="Name" type="text" class="form-control" />
+                    </div>
+                    <div class="mb-3">
+                        <label asp-for="Description" class="form-label">Description:</label>
+                        <input asp-for="Description" step="any" type="number" class="form-control" />
+                    </div>
+                    <div class="mb-3">
+                        <label asp-for="image" class="form-label">image:</label>
+                        <input asp-for="image" class="form-select" type="text">
+
+                    </div>
+                    <button type="submit" class="btn btn-outline-primary float-end">Save</button>
+                </form>
+
+            </div>
+        </div>
+    </div>
+</div>

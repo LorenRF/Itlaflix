@@ -1,0 +1,33 @@
+﻿@*Strong type views*@
+@model List<Itlaflix.Core.Application.ViewModel.SerieViewModel>
+@{
+    ViewData["Title"] = "Series";
+}
+
+<div class="container-fluid">
+    <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
+        @if (Model == null || Model.Count == 0)
+        {
+            <h2>No hay series agregadas</h2>
+        }
+        else
+        {
+            @foreach (Itlaflix.Core.Application.ViewModel.SerieViewModel item in Model)
+            {
+                <div class="col">
+                    <div class="card shadow-sm">
+                        <img class=" bd-placeholder-img card-img-top" src="@item.image" />
+                        <div class="card-body">
+                            <h4>@item.Name</h4>
+                            <p class="card-text">@item.Description</p>
+                            <div class="">
+                                <small class="fw-bold fs-6">@item.director</small>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            }
+        }
+
+    </div>
+</div>

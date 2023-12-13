@@ -1,0 +1,63 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.7.34221.43
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Itlaflix", "Itlaflix\Itlaflix.csproj", "{0AF6E9B3-8241-4A9D-8C3F-4C61175ACBF7}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Itlaflix.Infrastructure.Persistence", "Database\Itlaflix.Infrastructure.Persistence.csproj", "{008E3BB8-ADF7-43D0-9101-F3A7C84F2328}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Itlaflix.Core.Application", "Application\Itlaflix.Core.Application.csproj", "{40AFF0FC-628F-4CFF-A755-6FB9082EA948}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Sources", "Sources", "{DC9C47DC-69D3-46DA-B1DC-9A614B81B63D}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Core", "Core", "{165EE06F-73A6-4274-87BE-2D9EAB7E772F}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Infraestructure", "Infraestructure", "{EA691C2F-8A00-421D-9398-77F1979E56FD}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Presentation", "Presentation", "{A7632A47-8046-4F50-8473-2E189EAC238D}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "WebApp", "WebApp", "{CBAEFA88-7BEC-44FD-B8EE-CD0C7BD20053}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Itlaflix.Core.Domain", "Itlaflix.core.domain\Itlaflix.Core.Domain.csproj", "{34C6C563-19B1-4C20-8D8E-F8844C52BC61}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{0AF6E9B3-8241-4A9D-8C3F-4C61175ACBF7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0AF6E9B3-8241-4A9D-8C3F-4C61175ACBF7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0AF6E9B3-8241-4A9D-8C3F-4C61175ACBF7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0AF6E9B3-8241-4A9D-8C3F-4C61175ACBF7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{008E3BB8-ADF7-43D0-9101-F3A7C84F2328}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{008E3BB8-ADF7-43D0-9101-F3A7C84F2328}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{008E3BB8-ADF7-43D0-9101-F3A7C84F2328}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{008E3BB8-ADF7-43D0-9101-F3A7C84F2328}.Release|Any CPU.Build.0 = Release|Any CPU
+		{40AFF0FC-628F-4CFF-A755-6FB9082EA948}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{40AFF0FC-628F-4CFF-A755-6FB9082EA948}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{40AFF0FC-628F-4CFF-A755-6FB9082EA948}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{40AFF0FC-628F-4CFF-A755-6FB9082EA948}.Release|Any CPU.Build.0 = Release|Any CPU
+		{34C6C563-19B1-4C20-8D8E-F8844C52BC61}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{34C6C563-19B1-4C20-8D8E-F8844C52BC61}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{34C6C563-19B1-4C20-8D8E-F8844C52BC61}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{34C6C563-19B1-4C20-8D8E-F8844C52BC61}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{0AF6E9B3-8241-4A9D-8C3F-4C61175ACBF7} = {CBAEFA88-7BEC-44FD-B8EE-CD0C7BD20053}
+		{008E3BB8-ADF7-43D0-9101-F3A7C84F2328} = {EA691C2F-8A00-421D-9398-77F1979E56FD}
+		{40AFF0FC-628F-4CFF-A755-6FB9082EA948} = {165EE06F-73A6-4274-87BE-2D9EAB7E772F}
+		{165EE06F-73A6-4274-87BE-2D9EAB7E772F} = {DC9C47DC-69D3-46DA-B1DC-9A614B81B63D}
+		{EA691C2F-8A00-421D-9398-77F1979E56FD} = {DC9C47DC-69D3-46DA-B1DC-9A614B81B63D}
+		{A7632A47-8046-4F50-8473-2E189EAC238D} = {DC9C47DC-69D3-46DA-B1DC-9A614B81B63D}
+		{CBAEFA88-7BEC-44FD-B8EE-CD0C7BD20053} = {A7632A47-8046-4F50-8473-2E189EAC238D}
+		{34C6C563-19B1-4C20-8D8E-F8844C52BC61} = {165EE06F-73A6-4274-87BE-2D9EAB7E772F}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {F7D608A6-7CFF-4C84-84AD-3FF9B2694BD3}
+	EndGlobalSection
+EndGlobal
