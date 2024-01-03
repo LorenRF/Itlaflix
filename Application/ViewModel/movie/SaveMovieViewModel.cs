@@ -13,10 +13,13 @@ namespace Itlaflix.Core.Application.ViewModel.movie
 {
     public class SaveMovieViewModel
     {
+        public int Id { get; set; }
+
         [Required(ErrorMessage = "Debe colocar el titulo de la pelicula")]
         public string Name { get; set; }
         public string Description { get; set; }
         public string imagePath { get; set; }
+        public ICollection<SerieGender> gender { get; set; }
         [Required(ErrorMessage = "Debe colocar el año de estreno")]
         public int year { get; set; }
         [Required(ErrorMessage = "Debe colocar el director de la pelicula")]
@@ -25,7 +28,7 @@ namespace Itlaflix.Core.Application.ViewModel.movie
         public ICollection<ProducerMovie> ProducerMovies { get; set; }
         [Required(ErrorMessage = "Debe colocar el genero de la pelicula")]
         public ICollection<MovieGender> MovieGenders { get; set; } // Cambiado de Gender a MovieGender
-        public ICollection<ProducerSerie> Producer { get; set; }
+        public ICollection<ProducerSerie> producer { get; set; }
         public List<ProducerViewModel> producerList { get; set; }
         public List<DirectorViewModel> directorList { get; set; }
         public List<GenderViewModel> genderList { get; set; }

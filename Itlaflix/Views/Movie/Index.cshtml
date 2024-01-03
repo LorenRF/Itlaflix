@@ -1,0 +1,42 @@
+﻿@*Strong type views*@
+@using Itlaflix.Core.Application.ViewModel.movie;
+@model List<MovieViewModel>
+@{
+    ViewData["Title"] = "Movies";
+}
+
+<div class="container-fluid">
+    <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
+        <a asp-controller="Movie" asp-action="Create" type="button" class="btn btn-outline-success">Agregar una nueva pelicula</a>
+
+        @if (Model == null || Model.Count == 0)
+        {
+            <h2>No hay peliculas agregadas</h2>
+        }
+        else
+        {
+            @foreach (Itlaflix.Core.Application.ViewModel.movie.MovieViewModel item in Model)
+            {
+                <div class="col">
+                    <div class="card shadow-sm">
+                        <img class=" bd-placeholder-img card-img-top" src="@item.imagePath" />
+                        <div class="card-body">
+                            <h4>@item.Name</h4>
+                            <p class="card-text">@item.Description</p>
+                            <div class="">
+                                <small class="fw-bold fs-6">@item.director</small>
+                            </div>
+                            <div>
+                                <a asp-controller="Movie" asp-action="Edit" asp-all-route-id="@item.Id" type="button" class="btn btn-outline-primary">Ver</a>
+                                <a asp-controller="Movie" asp-action="Delete" asp-all-route-id="@item.Id" type="button" class=" btn btn-outline-danger">Eliminar</a>
+                                <a asp-controller="Movie" asp-action="Edit" asp-all-route-id="@item.Id" type=" button" class=" btn btn-outline-warning">Editar</a>
+                             </div>
+                            
+                        </div>
+                    </div>
+                </div>
+            }
+        }
+
+    </div>
+</div>
