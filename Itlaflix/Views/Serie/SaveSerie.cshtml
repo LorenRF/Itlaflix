@@ -1,0 +1,107 @@
+﻿<!-- Vista SaveSerie -->
+@using Itlaflix.Core.Application.ViewModel.serie 
+@model SaveSerieViewModel  // Define el modelo de vista que se utilizará en esta vista
+
+@{
+    bool editMode = Model.Id == 0 ? false : true;  // Determina si la vista está en modo de edición o creación
+    ViewData["Title"] = "Series";  // Establece el título de la vista
+}
+
+<div class="card">
+    <h5 class="card-header">@(editMode ? $"Editando: {Model.Name}" : "Agregando una nueva serie")</h5>
+    <div class="card-body">
+        <form method="post" asp-controller="Serie" asp-action="@(editMode ? "Edit" : "Create")">
+            <h5 class="card-title">@(editMode ? "Editar" : "Agregar")</h5>
+
+            <!-- Campo para el nombre -->
+            <div class="mb-3">
+                <label asp-for="Name" class="form-label">Name:</label>
+                <input asp-for="Name" type="text" class="form-control" />
+                <span asp-validation-for="Name" class="text-danger"></span>
+            </div>
+
+            <!-- Campo para la descripción -->
+            <div class="mb-3">
+                <label asp-for="Description" class="form-label">Description:</label>
+                <textarea asp-for="Description" class="form-control" aria-label="With textarea"></textarea>
+            </div>
+
+            <!-- Campo para el género -->
+            <div class="mb-3">
+                <label asp-for="Gender" class="form-label">Género:</label>
+                @if (Model.genderList.Count == 0)
+                {
+                    <input type="checkbox" class="btn-check" id="btn-check-6" autocomplete="off" disabled>
+                    <label class="btn" for="btn-check-6">Aún no se han agregado géneros</label>
+                }
+                else
+                {
+                    @foreach (var gender in Model.genderList)
+                    {
+                        <input type="checkbox" class="btn-check" id="btn-check-4" autocomplete="off">
+                        <label class="btn" for="btn-check-4">@gender.Name</label>
+                    }
+                }
+                <span asp-validation-for="Gender" class="text-danger"></span>
+            </div>
+
+            <!-- Campo para la imagen -->
+            <div class="mb-3">
+                <label asp-for="image" class="form-label">Image:</label>
+                <input asp-for="image" class="form-select" type="url">
+            </div>
+
+            <!-- Campo para el año -->
+            <div class="mb-3">
+                <label asp-for="year" class="form-label">Año:</label>
+                <input asp-for="year" class="form-control" type="number">
+                <span asp-validation-for="year" class="text-danger"></span>
+            </div>
+
+            <!-- Campo para el director -->
+            <div class="mb-3">
+                <label asp-for="director" class="form-label">Director:</label>
+                <select asp-for="director" class="form-select">
+                    @if (Model.directorList.Count == 0)
+                    {
+                        <option>Aún no se han agregado directores</option>
+                    }
+                    else
+                    {
+                        @foreach (var director in Model.directorList)
+                        {
+                            <option>@director.Name</option>
+                        }
+                    }
+                </select>
+                <span asp-validation-for="director" class="text-danger"></span>
+            </div>
+
+            <!-- Campo para el productor -->
+            <div class="mb-3">
+                <label asp-for="producer" class="form-label">Productor:</label>
+                <select asp-for="producer" class="form-select">
+                    @if (Model.producerList.Count == 0)
+                    {
+                        <option>Aún no se han agregado productores</option>
+                    }
+                    else
+                    {
+                        @foreach (var producer in Model.producerList)
+                        {
+                            <option>@producer.Name</option>
+                        }
+                    }
+                </select>
+                <span asp-validation-for="producer" class="text-danger"></span>
+            </div>
+
+            <!-- Campo oculto para el Id -->
+            <input type="hidden" asp-for="Id" />
+
+            <!-- Botones para guardar y volver -->
+            <button type="submit" class="btn btn-outline-primary float-end">Guardar</button>
+            <a asp-controller="Serie" asp-action="Index" class="btn btn-outline-success">Volver</a>
+        </form>
+    </div>
+</div>

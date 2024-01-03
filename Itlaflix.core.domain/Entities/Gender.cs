@@ -2,14 +2,13 @@
 
 using System.ComponentModel.DataAnnotations.Schema;
 using System.ComponentModel.DataAnnotations;
+using Itlaflix.Core.Domain.Common;
 
 namespace Itlaflix.Core.Domain.Entities
 {
-    public class Gender
+    public class Gender : AuditableBaseEntity
     {
-        [Key]
-        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        public int Id { get; set; }
+        
         public string Name { get; set; }
 
         // Relación con Series
