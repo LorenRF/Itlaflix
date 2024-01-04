@@ -1,0 +1,41 @@
+﻿@*Strong type views*@
+@using Itlaflix.Core.Application.ViewModel.season;
+@model List<SeasonViewModel>
+@{
+    ViewData["Title"] = "Seasons";
+}
+
+<div class="container-fluid">
+    <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
+        <a asp-controller="Season" asp-action="Create" type="button" class="btn btn-outline-success">Agregar una nueva temporada</a>
+
+        @if (Model == null || Model.Count == 0)
+        {
+            <h2>No hay temporadas agregadas</h2>
+        }
+        else
+        {
+            @foreach (Itlaflix.Core.Application.ViewModel.season.SeasonViewModel item in Model)
+            {
+                <div class="col">
+                    <div class="card shadow-sm">
+                        <div class="card-body">
+                            <h4>@item.Id</h4>
+                            <p class="card-text">@item.SeasonNumber</p>
+                            <div class="">
+                                <small class="fw-bold fs-6">@item.Serie</small>
+                            </div>
+                            <div>
+                                <a asp-controller="Season" asp-action="Edit" asp-all-route-id="@item.Id" type="button" class="btn btn-outline-primary">Ver</a>
+                                <a asp-controller="Season" asp-action="Delete" asp-all-route-id="@item.Id" type="button" class=" btn btn-outline-danger">Eliminar</a>
+                                <a asp-controller="Season" asp-action="Edit" asp-all-route-id="@item.Id" type=" button" class=" btn btn-outline-warning">Editar</a>
+                             </div>
+                            
+                        </div>
+                    </div>
+                </div>
+            }
+        }
+
+    </div>
+</div>

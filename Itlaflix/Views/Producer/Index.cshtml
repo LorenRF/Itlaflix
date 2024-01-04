@@ -1,0 +1,35 @@
+﻿@*Strong type views*@
+@using Itlaflix.Core.Application.ViewModel.producer;
+@model List<ProducerViewModel>
+@{
+    ViewData["Title"] = "Producers";
+}
+
+<div class="container-fluid">
+    <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
+        <a asp-controller="Producer" asp-action="Create" type="button" class="btn btn-outline-success">Agregar un nuevo productor</a>
+
+        @if (Model == null || Model.Count == 0)
+        {
+            <h2>No hay productores agregadas</h2>
+        }
+        else
+        {
+            @foreach (Itlaflix.Core.Application.ViewModel.producer.ProducerViewModel item in Model)
+            {
+                <div class="col">
+                    <div class="card shadow-sm">
+                       
+                            <div>
+                                <a asp-controller="Producer" asp-action="Edit" asp-all-route-id="@item.Id" type="button" class="btn btn-outline-primary">Ver</a>
+                                <a asp-controller="Producer" asp-action="Delete" asp-all-route-id="@item.Id" type="button" class=" btn btn-outline-danger">Eliminar</a>
+                                <a asp-controller="Producer" asp-action="Edit" asp-all-route-id="@item.Id" type=" button" class=" btn btn-outline-warning">Editar</a>
+                             </div>
+                            
+                    </div>
+                </div>
+            }
+        }
+
+    </div>
+</div>

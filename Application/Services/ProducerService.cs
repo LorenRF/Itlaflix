@@ -1,14 +1,8 @@
 ﻿using Itlaflix.Core.Application.Interfaces.Repositories;
 using Itlaflix.Core.Application.Interfaces.Services;
 using Itlaflix.Core.Application.ViewModel;
-using Itlaflix.Core.Application.ViewModel.productor;
+using Itlaflix.Core.Application.ViewModel.producer;
 using Itlaflix.Core.Domain.Entities;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Net.Http.Headers;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Itlaflix.Core.Application.Services
 {

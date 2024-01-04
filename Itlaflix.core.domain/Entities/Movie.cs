@@ -10,6 +10,7 @@ namespace Itlaflix.Core.Domain.Entities
         public string Name { get; set; }
         public string Description { get; set; }
         public string imagePath { get; set; }
+        public string url { get; set; }
         public int year { get; set; } 
         public int directorId {  get; set; }
         public Director director {  get; set; }

@@ -29,6 +29,7 @@ namespace Itlaflix.Core.Application.Services
             episode.imagePath = vm.imagePath;
             episode.ReleaseDate = vm.ReleaseDate;
             episode.Season = vm.Season;
+            episode.url = vm.url;
 
             await _episodeRepository.AssAsync(episode);
         }
@@ -40,6 +41,7 @@ namespace Itlaflix.Core.Application.Services
             episode.imagePath = vm.imagePath;
             episode.ReleaseDate = vm.ReleaseDate;
             episode.Season = vm.Season;
+            episode.url = vm.url;
 
             await _episodeRepository.UpdateAsync(episode);
         }
@@ -59,6 +61,7 @@ namespace Itlaflix.Core.Application.Services
             vm.imagePath = episode.imagePath;
             vm.ReleaseDate = episode.ReleaseDate;
             vm.Season = episode.Season;
+            vm.url = vm.url;
 
             return vm;
         }
@@ -73,7 +76,8 @@ namespace Itlaflix.Core.Application.Services
                 Description = episode.Description,
                 imagePath = episode.imagePath,
                 ReleaseDate = episode.ReleaseDate,
-                Season = episode.Season
+                Season = episode.Season,
+                url = episode.url
 
 
             }).ToList();

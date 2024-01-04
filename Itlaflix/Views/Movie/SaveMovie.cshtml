@@ -8,7 +8,7 @@
 }
 
 <div class="card">
-    <h5 class="card-header">@(editMode ? $"Editando: {Model.Name}" : "Agregando una nueva movie")</h5>
+    <h5 class="card-header">@(editMode ? $"Editando: {Model.Name}" : "Agregando una nueva pelicula")</h5>
     <div class="card-body">
         <form method="post" asp-controller="Movie" asp-action="@(editMode ? "Edit" : "Create")">
             <h5 class="card-title">@(editMode ? "Editar" : "Agregar")</h5>
@@ -94,6 +94,12 @@
                     }
                 </select>
                 <span asp-validation-for="producer" class="text-danger"></span>
+            </div>
+            <!-- Campo para el url -->
+            <div class="mb-3">
+                <label asp-for="url" class="form-label">URL:</label>
+                <input asp-for="url" type="text" class="form-control" />
+                <span asp-validation-for="url" class="text-danger"></span>
             </div>
 
             <!-- Campo oculto para el Id -->

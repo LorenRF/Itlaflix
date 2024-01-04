@@ -1,5 +1,5 @@
 ﻿using Itlaflix.Core.Application.Interfaces.Services;
-using Itlaflix.Core.Application.ViewModel.productor;
+using Itlaflix.Core.Application.ViewModel.producer;
 using Itlaflix.Infrastructure.Persistence.Contexts;
 using Microsoft.AspNetCore.Mvc;
 

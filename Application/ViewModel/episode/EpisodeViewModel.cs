@@ -12,7 +12,7 @@ namespace Itlaflix.Core.Application.ViewModel.episode
         public int Id { get; set; }
         // Relación con Season
         public Season Season { get; set; }
-
+        public string url { get; set; }
         public string Name { get; set; }
         public string Description { get; set; }
         public string imagePath { get; set; }

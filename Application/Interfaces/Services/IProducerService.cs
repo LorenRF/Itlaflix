@@ -1,4 +1,4 @@
-﻿using Itlaflix.Core.Application.ViewModel.productor;
+﻿using Itlaflix.Core.Application.ViewModel.producer;
 using System;
 using System.Collections.Generic;
 using System.Linq;

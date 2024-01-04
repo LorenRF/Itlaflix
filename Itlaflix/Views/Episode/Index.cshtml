@@ -1,0 +1,42 @@
+﻿@*Strong type views*@
+@using Itlaflix.Core.Application.ViewModel.episode;
+@model List<EpisodeViewModel>
+@{
+    ViewData["Title"] = "Episodes";
+}
+
+<div class="container-fluid">
+    <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
+        <a asp-controller="Episode" asp-action="Create" type="button" class="btn btn-outline-success">Agregar un nuevo episodio</a>
+
+        @if (Model == null || Model.Count == 0)
+        {
+            <h2>No hay episodes agregadas</h2>
+        }
+        else
+        {
+            @foreach (Itlaflix.Core.Application.ViewModel.episode.EpisodeViewModel item in Model)
+            {
+                <div class="col">
+                    <div class="card shadow-sm">
+                        <img class=" bd-placeholder-img card-img-top" src="@item.imagePath" />
+                        <div class="card-body">
+                            <h4>@item.Name</h4>
+                            <p class="card-text">@item.Description</p>
+                            <div class="">
+                                <small class="fw-bold fs-6">@item.ReleaseDate</small>
+                            </div>
+                            <div>
+                                <a asp-controller="Episode" asp-action="Edit" asp-all-route-id="@item.Id" type="button" class="btn btn-outline-primary">Ver</a>
+                                <a asp-controller="Episode" asp-action="Delete" asp-all-route-id="@item.Id" type="button" class=" btn btn-outline-danger">Eliminar</a>
+                                <a asp-controller="Episode" asp-action="Edit" asp-all-route-id="@item.Id" type=" button" class=" btn btn-outline-warning">Editar</a>
+                             </div>
+                            
+                        </div>
+                    </div>
+                </div>
+            }
+        }
+
+    </div>
+</div>

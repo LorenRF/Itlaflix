@@ -1,13 +1,9 @@
 ﻿using Itlaflix.Core.Application.ViewModel.director;
 using Itlaflix.Core.Application.ViewModel.gender;
-using Itlaflix.Core.Application.ViewModel.productor;
+using Itlaflix.Core.Application.ViewModel.producer;
 using Itlaflix.Core.Domain.Entities;
-using System;
-using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+
 
 namespace Itlaflix.Core.Application.ViewModel.movie
 {
@@ -18,6 +14,7 @@ namespace Itlaflix.Core.Application.ViewModel.movie
         [Required(ErrorMessage = "Debe colocar el titulo de la pelicula")]
         public string Name { get; set; }
         public string Description { get; set; }
+        public string url { get; set; }
         public string imagePath { get; set; }
         public ICollection<SerieGender> gender { get; set; }
         [Required(ErrorMessage = "Debe colocar el año de estreno")]

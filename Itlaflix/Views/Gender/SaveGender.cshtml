@@ -1,0 +1,31 @@
+﻿<!-- Vista SaveGender -->
+@using Itlaflix.Core.Application.ViewModel.gender 
+@model SaveGenderViewModel  // Define el modelo de vista que se utilizará en esta vista
+
+@{
+    bool editMode = Model.Id == 0 ? false : true;  // Determina si la vista está en modo de edición o creación
+    ViewData["Title"] = "Genders";  // Establece el título de la vista
+}
+
+<div class="card">
+    <h5 class="card-header">@(editMode ? $"Editando: {Model.Name}" : "Agregando un nuevo genero")</h5>
+    <div class="card-body">
+        <form method="post" asp-controller="Gender" asp-action="@(editMode ? "Edit" : "Create")">
+            <h5 class="card-title">@(editMode ? "Editar" : "Agregar")</h5>
+
+            <!-- Campo para el nombre -->
+            <div class="mb-3">
+                <label asp-for="Name" class="form-label">Name:</label>
+                <input asp-for="Name" type="text" class="form-control" />
+                <span asp-validation-for="Name" class="text-danger"></span>
+            </div>
+
+            <!-- Campo oculto para el Id -->
+            <input type="hidden" asp-for="Id" />
+
+            <!-- Botones para guardar y volver -->
+            <button type="submit" class="btn btn-outline-primary float-end">Guardar</button>
+            <a asp-controller="Gender" asp-action="Index" class="btn btn-outline-success">Volver</a>
+        </form>
+    </div>
+</div>

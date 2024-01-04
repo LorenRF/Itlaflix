@@ -6,10 +6,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Itlaflix.Core.Application.ViewModel.productor
+namespace Itlaflix.Core.Application.ViewModel.producer
 {
     public class SaveProducerViewModel
     {
+        public int Id { get; set; }
         [Required(ErrorMessage = "Debe colocar el nombre de la productora")]
         public string Name { get; set; }
     }

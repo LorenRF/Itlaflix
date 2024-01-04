@@ -18,7 +18,7 @@ namespace Itlaflix.Core.Domain.Common
         public DateTime created { get; set; }
 
         // Usuario que modificó la entidad.
-        public string modifiedBy { get; set; }
+        public string? modifiedBy { get; set; }
 
         // Fecha y hora de la última modificación de la entidad.
         public DateTime? modified { get; set; }

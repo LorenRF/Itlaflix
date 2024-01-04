@@ -31,6 +31,7 @@ namespace Itlaflix.Core.Application.Services
             movie.year = vm.year;
             movie.ProducerMovies = vm.ProducerMovies;
             movie.MovieGenders = vm.MovieGenders;
+            movie.url = vm.url;
 
             await _movieRepository.AssAsync(movie);
         }
@@ -44,6 +45,7 @@ namespace Itlaflix.Core.Application.Services
             movie.year = vm.year;
             movie.ProducerMovies = vm.ProducerMovies;
             movie.MovieGenders = vm.MovieGenders;
+            movie.url = vm.url;
 
             await _movieRepository.UpdateAsync(movie);
         }
@@ -65,7 +67,7 @@ namespace Itlaflix.Core.Application.Services
             vm.year = movie.year;
             vm.ProducerMovies = movie.ProducerMovies;
             vm.MovieGenders = movie.MovieGenders;
-
+            vm.url = movie.url;
             return vm;
         }
 
@@ -81,7 +83,8 @@ namespace Itlaflix.Core.Application.Services
                 imagePath = movie.imagePath,
                 year = movie.year,
                 ProducerMovies = movie.ProducerMovies,
-                MovieGenders = movie.MovieGenders
+                MovieGenders = movie.MovieGenders,
+                url = movie.url
 
 
             }).ToList();

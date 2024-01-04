@@ -9,6 +9,7 @@ namespace Itlaflix.Core.Application.ViewModel.gender
 {
     public class GenderViewModel
     {
+        public int Id { get; set; }
         public string Name { get; set; }
         public ICollection<SerieGender> SerieGenders { get; set; }
 

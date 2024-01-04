@@ -1,7 +1,7 @@
 ﻿using Itlaflix.Core.Application.ViewModel.director;
 using Itlaflix.Core.Application.ViewModel.gender;
 using Itlaflix.Core.Application.ViewModel.movie;
-using Itlaflix.Core.Application.ViewModel.productor;
+using Itlaflix.Core.Application.ViewModel.producer;
 using Itlaflix.Core.Application.ViewModel.serie;
 
 namespace Itlaflix.Core.Application.ViewModel

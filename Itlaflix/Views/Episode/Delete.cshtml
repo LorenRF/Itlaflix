@@ -1,0 +1,19 @@
+﻿@using Itlaflix.Core.Application.ViewModel.episode
+@model EpisodeViewModel
+@{
+    ViewData["Title"] = "Eliminar Episode";
+}
+
+<div class="card text-center mb-3" style="width: 18rem;">
+    <div class="card-body">
+        <h5 class="card-title">Esta seguro de eliminar este episodio?</h5>
+        <p class="card-text">Este episodio será permanentemente eliminado de la base de datos.</p>
+        <form method="post" asp-controller="Episode" asp-action="DeletePost">
+            <input type="hidden" asp-for="Id" />
+            <button type="submit" class="btn btn-danger">Eliminar</button>
+            <a asp-controller="Episode" asp-action="Index" class="btn btn-primary">Canselar</a>
+
+        </form>
+        
+    </div>
+</div>

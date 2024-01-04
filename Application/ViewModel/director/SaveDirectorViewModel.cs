@@ -9,7 +9,8 @@ using System.Threading.Tasks;
 namespace Itlaflix.Core.Application.ViewModel.director
 {
     public class SaveDirectorViewModel
-    {   
+    {
+        public int Id { get; set; }
         [Required(ErrorMessage = "Debe colocar el nombre del director")]
         public string Name { get; set; }
         

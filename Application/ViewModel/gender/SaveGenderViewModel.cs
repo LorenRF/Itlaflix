@@ -10,6 +10,8 @@ namespace Itlaflix.Core.Application.ViewModel.gender
 {
     public class SaveGenderViewModel
     {
+        public int Id { get; set; }
+
         [Required(ErrorMessage = "Debe colocar el nombre del genero")]
         public string Name { get; set; }
     }

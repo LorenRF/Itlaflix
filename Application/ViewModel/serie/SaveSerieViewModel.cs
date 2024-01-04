@@ -1,7 +1,7 @@
 ﻿// Clase SaveSerieViewModel utilizada para la creación y edición de series desde la vista.
 using Itlaflix.Core.Application.ViewModel.director;
 using Itlaflix.Core.Application.ViewModel.gender;
-using Itlaflix.Core.Application.ViewModel.productor;
+using Itlaflix.Core.Application.ViewModel.producer;
 using Itlaflix.Core.Domain.Entities;
 using System.ComponentModel.DataAnnotations;
 

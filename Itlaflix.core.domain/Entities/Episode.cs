@@ -15,7 +15,7 @@ namespace Itlaflix.Core.Domain.Entities
         // Relación con Season
         public int SeasonId { get; set; }
         public Season Season { get; set; }
-
+        public string url { get; set; }
         public string Name { get; set; }
         public string Description { get; set; }
         public string imagePath { get; set; }

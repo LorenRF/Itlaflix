@@ -185,12 +185,14 @@ namespace Itlaflix.Infrastructure.Persistence.Contexts
             modelBuilder.Entity<Movie>().Property(m => m.imagePath).IsRequired();
             modelBuilder.Entity<Movie>().Property(m => m.year).IsRequired();
             modelBuilder.Entity<Movie>().Property(m => m.directorId).IsRequired();
+            modelBuilder.Entity<Episode>().Property(m => m.url).IsRequired();
             #endregion
 
             #region Episode
             modelBuilder.Entity<Episode>().Property(e => e.Name).IsRequired().HasMaxLength(200);
             modelBuilder.Entity<Episode>().Property(e => e.imagePath).IsRequired();
             modelBuilder.Entity<Episode>().Property(e => e.ReleaseDate).IsRequired();
+            modelBuilder.Entity<Episode>().Property(e => e.url).IsRequired();
             #endregion
 
             #endregion

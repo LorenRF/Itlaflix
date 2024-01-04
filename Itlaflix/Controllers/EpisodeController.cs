@@ -8,10 +8,12 @@ namespace Itlaflix.Controllers
     public class EpisodeController : Controller
     {
         private readonly IEpisodeService _episodeService;
+        private readonly ISeasonService _seasonService;
 
-        public EpisodeController (IEpisodeService episodeService)
+        public EpisodeController (IEpisodeService episodeService, ISeasonService seasonService)
         {
             _episodeService = episodeService;
+            _seasonService = seasonService;
         }
 
         public async Task<IActionResult> Index()
@@ -19,9 +21,13 @@ namespace Itlaflix.Controllers
             return View(await _episodeService.GetAllViewModel());
         }
 
-        public IActionResult create()
+        public async Task<IActionResult> create()
         {
-            return View("SaveEpisode", new SaveEpisodeViewModel());
+            var viewmodel = new SaveEpisodeViewModel
+            {
+                seasonList = await _seasonService.GetAllViewModel()
+            };
+            return View("SaveEpisode", viewmodel);
         }
 
         [HttpPost]
