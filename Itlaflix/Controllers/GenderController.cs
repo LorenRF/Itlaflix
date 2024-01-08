@@ -1,6 +1,5 @@
 ﻿using Itlaflix.Core.Application.Interfaces.Services;
 using Itlaflix.Core.Application.ViewModel.gender;
-using Itlaflix.Infrastructure.Persistence.Contexts;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Itlaflix.Controllers
