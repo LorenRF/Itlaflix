@@ -4,11 +4,11 @@
 
 @{
     bool editMode = Model.Id == 0 ? false : true;  // Determina si la vista está en modo de edición o creación
-    ViewData["Title"] = "Seasons";  // Establece el título de la vista
+    ViewData["Title"] = "Temporadas";  // Establece el título de la vista
 }
 
 <div class="card">
-    <h5 class="card-header">@(editMode ? $"Editando: {Model.Id}, temporada {Model.SeasonNumber} de {Model.Serie}" : "Agregando una nueva temporada")</h5>
+    <h5 class="card-header">@(editMode ? $"Editando: {Model.Id}, temporada {Model.SeasonNumber} de {Model.Serie.Name}" : "Agregando una nueva temporada")</h5>
     <div class="card-body">
         <form method="post" asp-controller="Season" asp-action="@(editMode ? "Edit" : "Create")">
             <h5 class="card-title">@(editMode ? "Editar" : "Agregar")</h5>
@@ -20,23 +20,27 @@
                 <span asp-validation-for="SeasonNumber" class="text-danger"></span>
             </div>
 
-            <!-- Campo para seleccionar la serie -->
+            <!-- Campo para el director -->
             <div class="mb-3">
-                <label asp-for="Serie" class="form-label">Serie:</label>
-                <select asp-for="Serie" class="form-select">
-                    @if (Model.serieList.Count == 0)
+                <label asp-for="SerieId" class="form-label">Director:</label>
+                <select asp-for="SerieId" class="form-select">
+                    @switch (Model.serieList)
                     {
-                        <option>Aún no se han agregado series</option>
-                    }
-                    else
-                    {
-                        @foreach (var serie in Model.serieList)
-                        {
-                            <option>@serie.Name</option>
-                        }
+                        case null:
+                            // Tratamiento para cuando la lista es nula
+                            break;
+                        case var list when list.Count == 0:
+                            <option>Aún no se han agregado directores</option>
+                            break;
+                        default:
+                            foreach (var serie in Model.serieList)
+                            {
+                                <option value="@serie.Id">@serie.Name</option>
+                            }
+                            break;
                     }
                 </select>
-                <span asp-validation-for="Serie" class="text-danger"></span>
+                <span asp-validation-for="SerieId" class="text-danger"></span>
             </div>
 
             <!-- Campo oculto para el Id -->

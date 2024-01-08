@@ -1,17 +1,36 @@
 ﻿@using Itlaflix.Core.Application.ViewModel.gender
 @model GenderViewModel
 @{
-    ViewData["Title"] = "Eliminar Gender";
+    ViewData["Title"] = "Eliminar Genero";
 }
 
 <div class="card text-center mb-3" style="width: 18rem;">
     <div class="card-body">
         <h5 class="card-title">Esta seguro de eliminar este genero?</h5>
-        <p class="card-text">Este genero será permanentemente eliminado de la base de datos.</p>
+        <p class="card-text">
+            Este genero será permanentemente eliminado de la base de datos:
+            <br /> Genero: @Model.Name
+            <br /> ID: @Model.Id
+            @if (Model.SerieGenders != null){
+            foreach (var item in Model.SerieGenders)
+            {
+            var text = $"<br /> Series que lo llevan: {item.Serie.Name}";
+            @Html.Raw(text)
+                }
+            }
+            @if (Model.MovieGenders != null){
+                foreach (var item in Model.MovieGenders)
+                {
+                    var text = $"<br /> Peliculas que lo llevan: {item.Movie.Name}";
+                    @Html.Raw(text)
+                }
+            }
+
+        </p>
         <form method="post" asp-controller="Gender" asp-action="DeletePost">
             <input type="hidden" asp-for="Id" />
             <button type="submit" class="btn btn-danger">Eliminar</button>
-            <a asp-controller="Gender" asp-action="Index" class="btn btn-primary">Canselar</a>
+            <a asp-controller="Gender" asp-action="Index" class="btn btn-primary">Cancelar</a>
 
         </form>
         

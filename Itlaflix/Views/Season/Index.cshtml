@@ -2,13 +2,16 @@
 @using Itlaflix.Core.Application.ViewModel.season;
 @model List<SeasonViewModel>
 @{
-    ViewData["Title"] = "Seasons";
+    ViewData["Title"] = "Temporadas";
 }
 
 <div class="container-fluid">
+    <div class="w-75 mb-3">
     <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
         <a asp-controller="Season" asp-action="Create" type="button" class="btn btn-outline-success">Agregar una nueva temporada</a>
-
+        </div>
+        </div>
+    <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
         @if (Model == null || Model.Count == 0)
         {
             <h2>No hay temporadas agregadas</h2>
@@ -20,15 +23,18 @@
                 <div class="col">
                     <div class="card shadow-sm">
                         <div class="card-body">
-                            <h4>@item.Id</h4>
-                            <p class="card-text">@item.SeasonNumber</p>
+                            <h4>@item.Serie.Name</h4>
+                            <p class="card-text">Temporada @item.SeasonNumber</p>
                             <div class="">
-                                <small class="fw-bold fs-6">@item.Serie</small>
+                                <small class="fw-bold fs-6"></small>
                             </div>
+                            @{
+                                int id = item.Id;
+                            }
                             <div>
-                                <a asp-controller="Season" asp-action="Edit" asp-all-route-id="@item.Id" type="button" class="btn btn-outline-primary">Ver</a>
-                                <a asp-controller="Season" asp-action="Delete" asp-all-route-id="@item.Id" type="button" class=" btn btn-outline-danger">Eliminar</a>
-                                <a asp-controller="Season" asp-action="Edit" asp-all-route-id="@item.Id" type=" button" class=" btn btn-outline-warning">Editar</a>
+                                <a asp-controller="Season" asp-action="SeasonEpisodes" asp-route-id="@id" type="button" class="btn btn-outline-primary">Ver</a>
+                                <a asp-controller="Season" asp-action="Delete" asp-route-id="@id" type="button" class=" btn btn-outline-danger">Eliminar</a>
+                                <a asp-controller="Season" asp-action="Edit" asp-route-id="@id" type=" button" class=" btn btn-outline-warning">Editar</a>
                              </div>
                             
                         </div>

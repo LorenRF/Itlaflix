@@ -16,16 +16,14 @@ namespace Itlaflix.Core.Application.ViewModel.movie
         public string Description { get; set; }
         public string url { get; set; }
         public string imagePath { get; set; }
-        public ICollection<SerieGender> gender { get; set; }
         [Required(ErrorMessage = "Debe colocar el año de estreno")]
         public int year { get; set; }
         [Required(ErrorMessage = "Debe colocar el director de la pelicula")]
-        public Director director { get; set; }
+        public int directorId { get; set; }
         [Required(ErrorMessage = "Debe colocar la productora de la pelicula")]
-        public ICollection<ProducerMovie> ProducerMovies { get; set; }
+        public List<int> ProducersId { get; set; }
         [Required(ErrorMessage = "Debe colocar el genero de la pelicula")]
-        public ICollection<MovieGender> MovieGenders { get; set; } // Cambiado de Gender a MovieGender
-        public ICollection<ProducerSerie> producer { get; set; }
+        public List<int> GendersId { get; set; } // Cambiado de Gender a MovieGender
         public List<ProducerViewModel> producerList { get; set; }
         public List<DirectorViewModel> directorList { get; set; }
         public List<GenderViewModel> genderList { get; set; }

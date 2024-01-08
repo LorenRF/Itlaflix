@@ -1,0 +1,18 @@
+﻿@*Strong type views*@
+@using Itlaflix.Core.Application.ViewModel.episode;
+@model EpisodeViewModel
+@{
+    ViewData["Title"] = Model.Name;
+}
+
+<div class="card mb-3">
+    <div class="text-center">
+        @Html.Raw(Model.url)
+    </div>
+    
+    <div class="card-body">
+        <h5 class="card-title">Episodio @Model.episodeNumber : @Model.Name</h5>
+        <p class="card-text">@Model.Description</p>
+        <p class="card-text"><small class="text-body-secondary">@Model.ReleaseDate</small></p>
+    </div>
+</div>

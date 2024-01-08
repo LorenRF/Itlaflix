@@ -7,7 +7,7 @@ namespace Itlaflix.Core.Application.ViewModel.director
     {
         public int Id { get; set; }
         public string Name { get; set; }
-        public ICollection<Serie> DirectedSeries { get; set; }
-        public ICollection<Movie> DirectedMovies { get; set; }
+        public List<Serie> DirectedSeries { get; set; }
+        public List<Movie> DirectedMovies { get; set; }
     }
 }

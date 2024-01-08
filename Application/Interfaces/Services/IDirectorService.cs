@@ -9,6 +9,5 @@ namespace Itlaflix.Core.Application.Interfaces.Services
 {
     public interface IDirectorService : IGenericService<SaveDirectorViewModel, DirectorViewModel>
     {
-
     }
 }

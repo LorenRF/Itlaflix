@@ -6,37 +6,46 @@
 }
 
 <div class="container-fluid">
-    <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
+    <div class="w-75 mb-3">
+      <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
         <a asp-controller="Episode" asp-action="Create" type="button" class="btn btn-outline-success">Agregar un nuevo episodio</a>
+    </div>
+</div>
+<div class="w-75 mb-3">
+        <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
 
         @if (Model == null || Model.Count == 0)
         {
-            <h2>No hay episodes agregadas</h2>
+            <h2>No hay episodios agregados</h2>
         }
         else
         {
             @foreach (Itlaflix.Core.Application.ViewModel.episode.EpisodeViewModel item in Model)
             {
+
                 <div class="col">
-                    <div class="card shadow-sm">
+                        <div class="card shadow-sm text-center align-content-center">
                         <img class=" bd-placeholder-img card-img-top" src="@item.imagePath" />
-                        <div class="card-body">
-                            <h4>@item.Name</h4>
+                            <div class="card-body align-content-center" style="max-height: 300px; overflow-y: auto; ">
+                            <h4>Episodio @item.episodeNumber : @item.Name</h4>
                             <p class="card-text">@item.Description</p>
                             <div class="">
                                 <small class="fw-bold fs-6">@item.ReleaseDate</small>
                             </div>
+                            @{
+                                int id = item.Id;
+                            }
                             <div>
-                                <a asp-controller="Episode" asp-action="Edit" asp-all-route-id="@item.Id" type="button" class="btn btn-outline-primary">Ver</a>
-                                <a asp-controller="Episode" asp-action="Delete" asp-all-route-id="@item.Id" type="button" class=" btn btn-outline-danger">Eliminar</a>
-                                <a asp-controller="Episode" asp-action="Edit" asp-all-route-id="@item.Id" type=" button" class=" btn btn-outline-warning">Editar</a>
-                             </div>
-                            
+                                <a asp-controller="Episode" asp-action="Watch" asp-route-id="@id" type="button" class="btn btn-outline-primary">Ver</a>
+                                <a asp-controller="Episode" asp-action="Delete" asp-route-id="@id" type="button" class=" btn btn-outline-danger">Eliminar</a>
+                                <a asp-controller="Episode" asp-action="Edit" asp-route-id="@id" type=" button" class=" btn btn-outline-warning">Editar</a>
+                            </div>
                         </div>
                     </div>
                 </div>
+
             }
         }
-
+        </div>
     </div>
 </div>

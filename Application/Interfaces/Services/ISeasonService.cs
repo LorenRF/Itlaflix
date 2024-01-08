@@ -1,4 +1,5 @@
-﻿using Itlaflix.Core.Application.ViewModel.season;
+﻿using Itlaflix.Core.Application.ViewModel.episode;
+using Itlaflix.Core.Application.ViewModel.season;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,6 +10,7 @@ namespace Itlaflix.Core.Application.Interfaces.Services
 {
     public interface ISeasonService : IGenericService<SaveSeasonViewModel, SeasonViewModel>
     {
+        Task<List<EpisodeViewModel>> GetAllEpisodes(int id);
 
     }
 }

@@ -39,27 +39,51 @@ namespace Itlaflix.Controllers
 
         [HttpPost]
         public async Task<IActionResult> create(SaveMovieViewModel ssvm)
-        {
+        {       
+            ssvm.directorList = await _d.GetAllViewModel();
+            ssvm.genderList = await _g.GetAllViewModel();
+            ssvm.producerList = await _p.GetAllViewModel();
+            
             if (!ModelState.IsValid)
             {
+                if(ssvm.GendersId.Count > 0)
+                {
+                    await _movieService.Add(ssvm);
+                    return RedirectToRoute(new { controller = "movie", action = "Index" });
+                }
+                
                 return View("SaveMovie", ssvm);
             }
             await _movieService.Add(ssvm);
             return RedirectToRoute(new { controller = "movie", action = "Index" });
         }
 
-        [HttpPost]
+        [HttpGet]
         public async Task<IActionResult> Edit(int id)
         {
-            return View("SaveMovie", await _movieService.GetByIdSaveViewModel(id));
+            var ssvm = await _movieService.GetByIdSaveViewModel(id);
+
+            ssvm.directorList = await _d.GetAllViewModel();
+            ssvm.genderList = await _g.GetAllViewModel();
+            ssvm.producerList = await _p.GetAllViewModel();
+
+            return View("SaveMovie", ssvm);
         }
 
         [HttpPost]
         public async Task<IActionResult> Edit(SaveMovieViewModel ssvm)
         {
+            ssvm.directorList = await _d.GetAllViewModel();
+            ssvm.genderList = await _g.GetAllViewModel();
+            ssvm.producerList = await _p.GetAllViewModel();
+
             if (!ModelState.IsValid)
             {
-                return View("SaveMovie", ssvm);
+                if(ssvm.genderList.Count == 0)
+                {
+                    return View("SaveMovie", ssvm);
+                }
+                
             }
 
             await _movieService.Update(ssvm);
@@ -77,6 +101,25 @@ namespace Itlaflix.Controllers
             return RedirectToRoute(new { controller = "movie", action = "Index" });
         }
 
+        [HttpGet]
+        public async Task<IActionResult> Watch(int id)
+        {
+            var ssvm = await _movieService.GetByIdSaveViewModel(id);
+
+            MovieViewModel vm = new MovieViewModel
+            {
+                Id = ssvm.Id,
+                Name = ssvm.Name,
+                Description = ssvm.Description,
+                url = ssvm.url,
+                imagePath = ssvm.imagePath,
+                year = ssvm.year
+            };
+
+            return View("Watch", vm);
+        }
+
+    
 
     }
 }

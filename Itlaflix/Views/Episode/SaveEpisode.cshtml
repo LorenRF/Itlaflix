@@ -4,7 +4,7 @@
 
 @{
     bool editMode = Model.Id == 0 ? false : true;  // Determina si la vista está en modo de edición o creación
-    ViewData["Title"] = "Episodes";  // Establece el título de la vista
+    ViewData["Title"] = "Episodeos";  // Establece el título de la vista
 }
 
 <div class="card">
@@ -26,23 +26,27 @@
                 <textarea asp-for="Description" class="form-control" aria-label="With textarea"></textarea>
             </div>
 
-            <!-- Campo para el género -->
+            <!-- Campo para la temporada -->
             <div class="mb-3">
-                <label asp-for="Season" class="form-label">Temporada:</label>
-                @if (Model.seasonList.Count == 0)
-                {
-                    <input type="checkbox" class="btn-check" id="btn-check-6" autocomplete="off" disabled>
-                    <label class="btn" for="btn-check-6">Aún no se han agregado temporadas</label>
-                }
-                else
-                {
-                    @foreach (var temporada in Model.seasonList)
+                <label asp-for="SeasonId" class="form-label">Temporada:</label>
+                <select asp-for="SeasonId" class="form-select">
+                    @switch (Model.seasonList)
                     {
-                        <input type="checkbox" class="btn-check" id="btn-check-4" autocomplete="off">
-                        <label class="btn" for="btn-check-4">@temporada.Id</label>
+                        case null:
+                            // Tratamiento para cuando la lista es nula
+                            break;
+                        case var list when list.Count == 0:
+                            <option>Aún no se han agregado directores</option>
+                            break;
+                        default:
+                            foreach (var season in Model.seasonList)
+                            {
+                                <option value="@season.Id">@season.Serie.Name temp @season.SeasonNumber</option>
+                            }
+                            break;
                     }
-                }
-                <span asp-validation-for="Season" class="text-danger"></span>
+                </select>
+                <span asp-validation-for="SeasonId" class="text-danger"></span>
             </div>
 
             <!-- Campo para la imagen -->
@@ -56,6 +60,12 @@
                 <span asp-for="ReleaseDate" class="input-group-text" id="inputGroup-sizing-default" style="width:220px;">Fecha de lanzamiento</span>
                 <input asp-for="ReleaseDate" type="date" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default" id="releaseDateInput">
             </div>
+            <!-- Campo para el Fecha de Numero del capitulo -->
+            <div class="input-group mb-3">
+                <span asp-for="episodeNumber" class="input-group-text" id="inputGroup-sizing-default" style="width:220px;">Numero de el episodio</span>
+                <input asp-for="episodeNumber" type="number" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default" id="releaseDateInput">
+            </div>
+
             <div class="mb-3">
                 <label asp-for="url" class="form-label">URL:</label>
                 <input asp-for="url" type="text" class="form-control" />

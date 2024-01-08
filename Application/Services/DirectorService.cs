@@ -2,24 +2,23 @@
 using Itlaflix.Core.Application.Interfaces.Services;
 using Itlaflix.Core.Application.ViewModel;
 using Itlaflix.Core.Application.ViewModel.director;
-using Itlaflix.Core.Application.ViewModel.director;
 using Itlaflix.Core.Domain.Entities;
-using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Net.Http.Headers;
-using System.Text;
-using System.Threading.Tasks;
+
 
 namespace Itlaflix.Core.Application.Services
 {
     public class DirectorService: IDirectorService
     {
         private readonly IDirectorRepository _directorRepository;
+        private readonly IMovieRepository _MovieRepository;
+        private readonly ISerieRepository _SerieRepository;
 
-        public DirectorService(IDirectorRepository directorRepository)
+        public DirectorService(IDirectorRepository directorRepository, IMovieRepository movieRepository, ISerieRepository serieRepository)
         {
             _directorRepository = directorRepository;
+            _MovieRepository = movieRepository;
+            _SerieRepository = serieRepository;
         }
 
         public async Task Add(SaveDirectorViewModel vm)
@@ -31,7 +30,7 @@ namespace Itlaflix.Core.Application.Services
         }
         public async Task Update(SaveDirectorViewModel vm)
         {
-            Director director = new();
+            Director director = await _directorRepository.GetByIdAsync(vm.Id);
             director.Name = vm.Name;
 
             await _directorRepository.UpdateAsync(director);
@@ -48,19 +47,41 @@ namespace Itlaflix.Core.Application.Services
 
             SaveDirectorViewModel vm = new();
             vm.Name = director.Name;
+            vm.Id = director.Id;
 
             return vm;
         }
 
+        public async Task<DirectorViewModel> GetByIdViewModel(int id)
+        {
+            var director = await _directorRepository.GetByIdAsync(id);
+            List<Serie> directedSeries = await _SerieRepository.GetAllAsync();
+            List<Movie> directedMovies = await _MovieRepository.GetAllAsync();
+
+            
+
+            DirectorViewModel vm = new();
+            vm.Name = director.Name;
+            vm.Id = director.Id;
+            vm.DirectedSeries = directedSeries.Where(d => d.directorId == director.Id).ToList();
+            vm.DirectedMovies = directedMovies.Where(d => d.directorId == director.Id).ToList();
+
+            return vm;
+        }
+
+
         public async Task<List<DirectorViewModel>> GetAllViewModel()
         {
             var directorList = await _directorRepository.GetAllAsync();
+            List<Serie> directedSeries = await _SerieRepository.GetAllAsync();
+            List<Movie> directedMovies = await _MovieRepository.GetAllAsync();
 
             return directorList.Select(director => new DirectorViewModel
             {
                 Name = director.Name,
-                DirectedSeries = director.DirectedSeries,
-                DirectedMovies = director.DirectedMovies
+                DirectedSeries = directedSeries.Where(d => d.directorId == director.Id).ToList(),
+                DirectedMovies = directedMovies.Where(d => d.directorId == director.Id).ToList(),
+                Id = director.Id
 
             }).ToList();
         }

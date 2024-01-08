@@ -7,11 +7,29 @@
 <div class="card text-center mb-3" style="width: 18rem;">
     <div class="card-body">
         <h5 class="card-title">Esta seguro de eliminar este director?</h5>
-        <p class="card-text">Este director será permanentemente eliminado de la base de datos.</p>
+        <p class="card-text">Este director será permanentemente eliminado de la base de datos:
+            <br /> @Model.Name 
+            <br /> ID: @Model.Id
+            @if (Model.DirectedSeries != null){
+                foreach (var item in Model.DirectedSeries)
+                {
+                    var text = $"<br /> Series que lo llevan: {item.Name}";
+                    @Html.Raw(text)
+                }
+            }
+                
+                @if (Model.DirectedMovies != null){
+                foreach (var item in Model.DirectedMovies)
+                {
+                    var text = $"<br /> Peliculas que lo llevan: {item.Name}";
+                    @Html.Raw(text)
+                }
+            }
+        </p>
         <form method="post" asp-controller="Director" asp-action="DeletePost">
             <input type="hidden" asp-for="Id" />
             <button type="submit" class="btn btn-danger">Eliminar</button>
-            <a asp-controller="Director" asp-action="Index" class="btn btn-primary">Canselar</a>
+            <a asp-controller="Director" asp-action="Index" class="btn btn-primary">Cancelar</a>
 
         </form>
         

@@ -34,7 +34,8 @@ namespace Itlaflix.Controllers
             return RedirectToRoute(new { controller = "gender", action = "Index" });
         }
 
-        [HttpPost]
+        [HttpGet]
+
         public async Task<IActionResult> Edit(int id)
         {
             return View("SaveGender", await _genderService.GetByIdSaveViewModel(id));
@@ -54,7 +55,8 @@ namespace Itlaflix.Controllers
 
         public async Task<IActionResult> Delete(int id)
         {
-            return View(await _genderService.GetByIdSaveViewModel(id));
+
+            return View(await _genderService.GetByIdViewModel(id));
         }
 
         public async Task<IActionResult> DeletePost (int id)

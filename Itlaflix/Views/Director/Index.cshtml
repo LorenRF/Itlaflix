@@ -2,30 +2,37 @@
 @using Itlaflix.Core.Application.ViewModel.director;
 @model List<DirectorViewModel>
 @{
-    ViewData["Title"] = "Directors";
+    ViewData["Title"] = "Directores";
 }
 
 <div class="container-fluid">
     <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
+        <div class="w-75 mb-3">
         <a asp-controller="Director" asp-action="Create" type="button" class="btn btn-outline-success">Agregar un nuevo director</a>
-
+        </div>
+    </div>
+    <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
         @if (Model == null || Model.Count == 0)
         {
-            <h2>No hay directors agregadas</h2>
+            <h2>No hay directores agregados</h2>
         }
         else
         {
             @foreach (Itlaflix.Core.Application.ViewModel.director.DirectorViewModel item in Model)
             {
                 <div class="col">
-                    <div class="card shadow-sm">
-                        
+                    <div class="card shadow-sm text-center">
+                        <div class="card-body">
+                            <h5 class="card-title">@item.Name</h5>
+                            @{
+                                int id = item.Id;
+                            }
                             <div>
-                                <a asp-controller="Director" asp-action="Delete" asp-all-route-id="@item.Id" type="button" class=" btn btn-outline-danger">Eliminar</a>
-                                <a asp-controller="Director" asp-action="Edit" asp-all-route-id="@item.Id" type=" button" class=" btn btn-outline-warning">Editar</a>
-                             </div>
-                            
+                                <a asp-controller="Director" asp-action="Delete" asp-route-id="@id" type="button" class=" btn btn-outline-danger">Eliminar</a>
+                                <a asp-controller="Director" asp-action="Edit" asp-route-id="@id" type=" button" class=" btn btn-outline-warning">Editar</a>
+                            </div>
                         </div>
+                    </div>
                 </div>
             }
         }

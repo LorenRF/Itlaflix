@@ -4,11 +4,11 @@
 
 @{
     bool editMode = Model.Id == 0 ? false : true;  // Determina si la vista está en modo de edición o creación
-    ViewData["Title"] = "Directors";  // Establece el título de la vista
+    ViewData["Title"] = "Directores";  // Establece el título de la vista
 }
 
 <div class="card">
-    <h5 class="card-header">@(editMode ? $"Editando: {Model.Name}" : "Agregando una nueva director")</h5>
+    <h5 class="card-header">@(editMode ? $"Editando: {Model.Name}" : "Agregando un nuevo director")</h5>
     <div class="card-body">
         <form method="post" asp-controller="Director" asp-action="@(editMode ? "Edit" : "Create")">
             <h5 class="card-title">@(editMode ? "Editar" : "Agregar")</h5>

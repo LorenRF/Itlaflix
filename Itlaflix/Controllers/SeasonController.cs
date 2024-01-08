@@ -1,5 +1,9 @@
 ﻿using Itlaflix.Core.Application.Interfaces.Services;
+using Itlaflix.Core.Application.Services;
+using Itlaflix.Core.Application.ViewModel;
+using Itlaflix.Core.Application.ViewModel.episode;
 using Itlaflix.Core.Application.ViewModel.season;
+using Itlaflix.Core.Domain.Entities;
 using Itlaflix.Infrastructure.Persistence.Contexts;
 using Microsoft.AspNetCore.Mvc;
 
@@ -9,11 +13,13 @@ namespace Itlaflix.Controllers
     {
         private readonly ISeasonService _seasonService;
         private readonly ISerieService _serieService;
+        private readonly IEpisodeService _episodeService;
 
-        public SeasonController (ISeasonService seasonService, ISerieService serieService)
+        public SeasonController (ISeasonService seasonService, ISerieService serieService, IEpisodeService episodeService)
         {
             _seasonService = seasonService;
             _serieService = serieService;
+            _episodeService = episodeService;
         }
 
         public async Task<IActionResult> Index()
@@ -33,23 +39,38 @@ namespace Itlaflix.Controllers
         [HttpPost]
         public async Task<IActionResult> create(SaveSeasonViewModel ssvm)
         {
+
+            ssvm.serieList = await _serieService.GetAllViewModel();
+            
             if (!ModelState.IsValid)
             {
-                return View("SaveSeason", ssvm);
+                if(ssvm.SeasonNumber == null || ssvm.SerieId == null)
+                {
+                    return View("SaveSeason", ssvm);
+                }
+                
             }
             await _seasonService.Add(ssvm);
             return RedirectToRoute(new { controller = "season", action = "Index" });
         }
 
-        [HttpPost]
+        [HttpGet]
         public async Task<IActionResult> Edit(int id)
         {
-            return View("SaveSeason", await _seasonService.GetByIdSaveViewModel(id));
+            var viewmodel = await _seasonService.GetByIdSaveViewModel(id);
+                viewmodel.serieList = await _serieService.GetAllViewModel();
+            
+
+            viewmodel.serieList = await _serieService.GetAllViewModel();
+            
+            return View("SaveSeason", viewmodel);
         }
 
         [HttpPost]
         public async Task<IActionResult> Edit(SaveSeasonViewModel ssvm)
         {
+            ssvm.serieList = await _serieService.GetAllViewModel();
+
             if (!ModelState.IsValid)
             {
                 return View("SaveSeason", ssvm);
@@ -69,6 +90,19 @@ namespace Itlaflix.Controllers
             await _seasonService.Delete(id);
             return RedirectToRoute(new { controller = "season", action = "Index" });
         }
+
+
+        [HttpGet]
+        public async Task<IActionResult> SeasonEpisodes(int id)
+        {
+            var episodeVieModelList = await _seasonService.GetAllEpisodes(id);
+            var sortedListDescending = episodeVieModelList.OrderByDescending(e => e.Id).ToList();
+
+            return View("SeasonEpisodes", sortedListDescending);
+                
+                
+        }
+
 
 
     }

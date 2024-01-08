@@ -2,52 +2,33 @@
 using Itlaflix.Infrastructure.Persistence.Contexts;
 using Itlaflix.Core.Application.Services;
 using Itlaflix.Core.Application.Interfaces.Services;
+using Itlaflix.Core.Application.ViewModel;
 
 namespace Itlaflix.Controllers
 {
     public class HomeController: Controller
     {
         private readonly ISerieService serieService;
-        //private readonly IMovieService movieService;
+        private readonly IMovieService movieService;
 
-        public HomeController(/*IMovieService ms,*/ ISerieService ss)
+        public HomeController(IMovieService ms, ISerieService ss)
         {
             serieService = ss;
-            //movieService = ms; 
+            movieService = ms;
         }
 
         public async Task<IActionResult> Index ()
         {
-            return View(await serieService.GetAllViewModel()); 
+            var viewmodel = new ConvinedViewModels
+            {
+                serieList = await serieService.GetAllViewModel(),
+                movieList = await movieService.GetAllViewModel()
+
+            };
+
+            return View(viewmodel); 
         }
 
-        //public IActionResult Series () 
-        //{
-        //    return View();
-
-        //}
-        //[HttpPost]
-        ////public IActionResult Series(SerieViewModel svm)
-        ////{
-        ////    seriesService.add(svm);
-        ////    return RedirectToRoute(new { Controller = "Itlaflix", action = "index" });
-        ////    return View();
-
-
-        ////}
-        //public IActionResult Movies () 
-        //{
-        //    return View();
-        //}
-
-        //public IActionResult Producer ()
-        //{
-        //    return View();
-        //}
-
-        //public IActionResult Gender () 
-        //{
-        //    return View();
-        //}
+      
     }
 }

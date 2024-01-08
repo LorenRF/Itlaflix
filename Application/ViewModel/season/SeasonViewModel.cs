@@ -6,7 +6,7 @@ namespace Itlaflix.Core.Application.ViewModel.season
     {
         public int Id { get; set; }
         public int SeasonNumber { get; set; }
-
+        public int SerieId { get; set; }
         public Serie Serie { get; set; }
 
         // Relación con Episode

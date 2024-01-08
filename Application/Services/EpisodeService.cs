@@ -3,45 +3,54 @@ using Itlaflix.Core.Application.Interfaces.Services;
 using Itlaflix.Core.Application.ViewModel;
 using Itlaflix.Core.Application.ViewModel.episode;
 using Itlaflix.Core.Domain.Entities;
+using System.Xml.Linq;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Net.Http.Headers;
-using System.Text;
-using System.Threading.Tasks;
+using Itlaflix.Core.Application.ViewModel.movie;
 
 namespace Itlaflix.Core.Application.Services
 {
     public class EpisodeService: IEpisodeService
     {
         private readonly IEpisodeRepository _episodeRepository;
+        private readonly ISeasonRepository _seasonRepository;
 
-        public EpisodeService(IEpisodeRepository episodeRepository)
+
+        public EpisodeService(IEpisodeRepository episodeRepository, ISeasonRepository seasonRepository)
         {
             _episodeRepository = episodeRepository;
+            _seasonRepository = seasonRepository;
         }
 
         public async Task Add(SaveEpisodeViewModel vm)
         {
+            vm.Season = await _seasonRepository.GetByIdAsync(vm.SeasonId);
+
+
             Episode episode = new();
             episode.Name = vm.Name;
             episode.Description = vm.Description;
             episode.imagePath = vm.imagePath;
             episode.ReleaseDate = vm.ReleaseDate;
             episode.Season = vm.Season;
+            episode.SeasonId = vm.SeasonId;
             episode.url = vm.url;
+            episode.episodeNumber = vm.episodeNumber;
 
             await _episodeRepository.AssAsync(episode);
         }
         public async Task Update(SaveEpisodeViewModel vm)
         {
-            Episode episode = new();
+            Episode episode = await _episodeRepository.GetByIdAsync(vm.Id);
+            vm.Season = await _seasonRepository.GetByIdAsync(vm.SeasonId);
             episode.Name = vm.Name;
             episode.Description = vm.Description;
             episode.imagePath = vm.imagePath;
             episode.ReleaseDate = vm.ReleaseDate;
             episode.Season = vm.Season;
+            episode.SeasonId = vm.SeasonId;
             episode.url = vm.url;
+            episode.episodeNumber = vm.episodeNumber;
+
 
             await _episodeRepository.UpdateAsync(episode);
         }
@@ -60,24 +69,71 @@ namespace Itlaflix.Core.Application.Services
             vm.Description = episode.Description;
             vm.imagePath = episode.imagePath;
             vm.ReleaseDate = episode.ReleaseDate;
-            vm.Season = episode.Season;
-            vm.url = vm.url;
+            vm.Season = await _seasonRepository.GetByIdAsync(episode.SeasonId); ;
+            vm.SeasonId = episode.SeasonId;
+            vm.url = episode.url;
+            vm.Id = episode.Id;
+            vm.episodeNumber = episode.episodeNumber;
 
             return vm;
         }
+
+        public async Task<EpisodeViewModel> GetByIdViewModel(int id)
+        {
+            var episode = await _episodeRepository.GetByIdAsync(id);
+           
+            EpisodeViewModel vm = new();
+            vm.Name = episode.Name;
+            vm.Description = episode.Description;
+            vm.imagePath = episode.imagePath;
+            vm.ReleaseDate = episode.ReleaseDate;
+            vm.Season = await _seasonRepository.GetByIdAsync(episode.SeasonId); ;
+            vm.SeasonId = episode.SeasonId;
+            vm.url = episode.url;
+            vm.Id = episode.Id;
+
+            return vm;
+        }
+
+        public async Task<List<Episode>> GetAllEpisodes()
+        {
+            return await _episodeRepository.GetAllAsync();
+        }
+
 
         public async Task<List<EpisodeViewModel>> GetAllViewModel()
         {
             var episodeList = await _episodeRepository.GetAllAsync();
 
-            return episodeList.Select(episode => new EpisodeViewModel
+            List<Episode> EpisodesWithSeasonsList = new List<Episode>();
+
+            foreach(Episode evm in episodeList)
+            {
+                Episode episodes = new Episode();
+                episodes.Name = evm.Name;
+                episodes.Description = evm.Description;
+                episodes.imagePath = evm.imagePath;
+                episodes.ReleaseDate = evm.ReleaseDate;
+                episodes.Season = await _seasonRepository.GetByIdAsync(evm.SeasonId);
+                episodes.SeasonId = evm.SeasonId;
+                episodes.url = evm.url;
+                episodes.Id = evm.Id;
+                episodes.episodeNumber = evm.episodeNumber;
+
+                EpisodesWithSeasonsList.Add(episodes);
+            }
+
+            return EpisodesWithSeasonsList.Select(episode => new EpisodeViewModel
             {
                 Name = episode.Name,
                 Description = episode.Description,
                 imagePath = episode.imagePath,
                 ReleaseDate = episode.ReleaseDate,
                 Season = episode.Season,
-                url = episode.url
+                SeasonId = episode.SeasonId,
+                url = episode.url,
+                Id = episode.Id,
+                episodeNumber = episode.episodeNumber
 
 
             }).ToList();

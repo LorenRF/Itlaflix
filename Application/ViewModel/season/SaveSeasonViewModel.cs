@@ -15,6 +15,7 @@ namespace Itlaflix.Core.Application.ViewModel.season
         [Required(ErrorMessage = "Debe colocar el numero de la temporada")]
         public int SeasonNumber { get; set; }
         [Required(ErrorMessage = "Debe colocar la serie a la que pertenece a temporada")]
+        public int SerieId { get; set; }
         public Serie Serie { get; set; }
         public List<SerieViewModel> serieList { get; set; }
     }

@@ -49,6 +49,7 @@ namespace Itlaflix.Infrastructure.Persistence.Contexts
                         entry.Entity.modified = DateTime.Now;
                         // Establece la propiedad 'modifieBy' con un valor predeterminado ("DefaultAppUser" en este caso)
                         entry.Entity.modifiedBy = "DefaultAppUser";
+
                         break;
                 }
             }

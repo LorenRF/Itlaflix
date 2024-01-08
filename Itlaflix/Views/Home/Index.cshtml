@@ -1,22 +1,32 @@
 ﻿@*Strong type views*@
-@model List<Itlaflix.Core.Application.ViewModel.serie.SerieViewModel>
+@using Itlaflix.Core.Application.ViewModel
+@using Itlaflix.Core.Application.ViewModel.serie
+@using Itlaflix.Core.Application.ViewModel.movie
+@model ConvinedViewModels
 @{
     ViewData["Title"] = "home";
 }
 
 <div class="container-fluid">
-<div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
-    @if(Model == null || Model.Count == 0) {
+    <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
+        <h5 style ="margin: 50px;">Series</h5>
+        </div>
+        <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
+
+    @if(Model.serieList == null || Model.serieList.Count == 0) {
             <h2>No hay series agregadas</h2>
         }
         else
         {
-            @foreach (Itlaflix.Core.Application.ViewModel.serie.SerieViewModel item in Model)
+            @foreach (SerieViewModel item in Model.serieList)
             {
     <div class="col">
-        <div class="card shadow-sm">
-            <img class=" bd-placeholder-img card-img-top" src="@item.image"/>
-            <div class="card-body">
+                    <div class="card shadow-sm" style="margin: 0 20px;">
+                        @{
+                            int id = item.Id;
+                        }
+                        <a asp-controller="Serie" asp-action="Watch" asp-route-id="@id" type="button" class="btn btn-outline-primary"><img class=" bd-placeholder-img card-img-top" src="@item.image" /></a>
+                        <div class="card-body" style="max-height: 300px; overflow-y: auto;">
                 <h4>@item.Name</h4>
                 <p class="card-text">@item.Description</p>
                 <div class="">
@@ -28,5 +38,39 @@
         }
         }
         
+    </div>
+    <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
+        <h5 style="margin:50px;">Peliculas</h5>
+        </div>
+
+    <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
+
+        @if (Model.movieList == null || Model.movieList.Count == 0)
+        {
+            <h2>No hay Peliculas agregadas</h2>
+        }
+        else
+        {
+            @foreach (MovieViewModel item in Model.movieList)
+            {
+                <div class="col">
+                    <div class="card shadow-sm" style="margin: 0 10px;">
+                        @{
+                            int id = item.Id;
+                        }
+                        <a asp-controller="Movie" asp-action="Watch" asp-route-id="@id" type="button" class="btn btn-outline-primary"><img class=" bd-placeholder-img card-img-top" src="@item.imagePath" /></a>
+
+                        <div class="card-body" style="max-height: 300px; overflow-y: auto;">
+                            <h4>@item.Name</h4>
+                            <p class="card-text">@item.Description</p>
+                            <div class="">
+                                <small class="fw-bold fs-6">@item.director</small>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            }
+        }
+
     </div>
 </div>

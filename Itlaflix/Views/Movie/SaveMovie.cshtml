@@ -4,13 +4,13 @@
 
 @{
     bool editMode = Model.Id == 0 ? false : true;  // Determina si la vista está en modo de edición o creación
-    ViewData["Title"] = "Movies";  // Establece el título de la vista
+    ViewData["Title"] = "Peliculas";  // Establece el título de la vista
 }
 
 <div class="card">
     <h5 class="card-header">@(editMode ? $"Editando: {Model.Name}" : "Agregando una nueva pelicula")</h5>
     <div class="card-body">
-        <form method="post" asp-controller="Movie" asp-action="@(editMode ? "Edit" : "Create")">
+        <form method="post" asp-controller="Movie" asp-action="@(editMode ? "Edit" : "Create")" id="saveMovie">
             <h5 class="card-title">@(editMode ? "Editar" : "Agregar")</h5>
 
             <!-- Campo para el nombre -->
@@ -28,21 +28,28 @@
 
             <!-- Campo para el género -->
             <div class="mb-3">
-                <label asp-for="gender" class="form-label">Género:</label>
-                @if (Model.genderList.Count == 0)
+                <label asp-for="GendersId" class="form-label">Género:</label>
+                @switch (Model.genderList)
                 {
-                    <input type="checkbox" class="btn-check" id="btn-check-6" autocomplete="off" disabled>
-                    <label class="btn" for="btn-check-6">Aún no se han agregado géneros</label>
+                    case null:
+                        // No se hace nada si Model.genderList es nulo
+                        break;
+                    case var list when list.Count == 0:
+                        <input type="checkbox" class="btn-check" id="btn-check-6" autocomplete="off" disabled>
+                        <label class="btn" for="btn-check-6">Aún no se han agregado géneros</label>
+                        break;
+                    default:
+                        foreach (var gender in Model.genderList)
+                        {
+                            <input type="checkbox" class="btn-check" id="btn-check-p-@gender.Id" name="GendersId" value="@gender.Id" autocomplete="off">
+                            <label class="btn" for="btn-check-p-@gender.Id">@gender.Name</label>
+                           
+                        }
+                        <span asp-validation-for="GendersId" class="text-danger"></span>
+                        break;
                 }
-                else
-                {
-                    @foreach (var gender in Model.genderList)
-                    {
-                        <input type="checkbox" class="btn-check" id="btn-check-4" autocomplete="off">
-                        <label class="btn" for="btn-check-4">@gender.Name</label>
-                    }
-                }
-                <span asp-validation-for="gender" class="text-danger"></span>
+
+                
             </div>
 
             <!-- Campo para la imagen -->
@@ -60,41 +67,51 @@
 
             <!-- Campo para el director -->
             <div class="mb-3">
-                <label asp-for="director" class="form-label">Director:</label>
-                <select asp-for="director" class="form-select">
-                    @if (Model.directorList.Count == 0)
+                <label asp-for="directorId" class="form-label">Director:</label>
+                <select asp-for="directorId" class="form-select">
+                    @switch (Model.directorList)
                     {
-                        <option>Aún no se han agregado directores</option>
-                    }
-                    else
-                    {
-                        @foreach (var director in Model.directorList)
-                        {
-                            <option>@director.Name</option>
-                        }
+                        case null:
+                            // Tratamiento para cuando la lista es nula
+                            break;
+                        case var list when list.Count == 0:
+                            <option>Aún no se han agregado directores</option>
+                            break;
+                        default:
+                            foreach (var director in Model.directorList)
+                            {
+                                <option value="@director.Id">@director.Name</option>
+                            }
+                            break;
                     }
                 </select>
-                <span asp-validation-for="director" class="text-danger"></span>
+                <span asp-validation-for="directorId" class="text-danger"></span>
             </div>
 
             <!-- Campo para el productor -->
             <div class="mb-3">
-                <label asp-for="producer" class="form-label">Productor:</label>
-                <select asp-for="producer" class="form-select">
-                    @if (Model.producerList.Count == 0)
-                    {
-                        <option>Aún no se han agregado productores</option>
-                    }
-                    else
-                    {
-                        @foreach (var producer in Model.producerList)
+                <label asp-for="ProducersId" class="form-label">Productor:</label>
+                @switch (Model.producerList)
+                {
+                    case null:
+                        // No se hace nada si Model.genderList es nulo
+                        break;
+                    case var list when list.Count == 0:
+                        <input type="checkbox" class="btn-check" id="btn-check-6" autocomplete="off" disabled>
+                        <label class="btn" for="btn-check-6">Aún no se han agregado productoras</label>
+                        break;
+                    default:
+                        foreach (var producer in Model.producerList)
                         {
-                            <option>@producer.Name</option>
+                            <input type="checkbox" class="btn-check" id="btn-check-@producer.Id" name="ProducersId" value="@producer.Id" autocomplete="off">
+                            <label class="btn" for="btn-check-@producer.Id">@producer.Name</label>
+
                         }
-                    }
-                </select>
-                <span asp-validation-for="producer" class="text-danger"></span>
+                        <span asp-validation-for="ProducersId" class="text-danger"></span>
+                        break;
+                }
             </div>
+
             <!-- Campo para el url -->
             <div class="mb-3">
                 <label asp-for="url" class="form-label">URL:</label>
@@ -102,8 +119,9 @@
                 <span asp-validation-for="url" class="text-danger"></span>
             </div>
 
-            <!-- Campo oculto para el Id -->
+            <!-- Campo oculto para el manejo de ids -->
             <input type="hidden" asp-for="Id" />
+            <input type="hidden" asp-for="GendersId" id="GendersId" />
 
             <!-- Botones para guardar y volver -->
             <button type="submit" class="btn btn-outline-primary float-end">Guardar</button>
@@ -111,3 +129,36 @@
         </form>
     </div>
 </div>
+
+    <script>
+
+        $(document).ready(function () {
+            // Manejar el evento del formulario cuando se envía
+        $("#saveMovie").submit(function (event) {
+                // Evitar que el formulario se envíe normalmente
+                event.preventDefault();
+
+                // Crear una lista para almacenar los IDs de géneros seleccionados
+            var selectedGenders = [];
+            var selectedProducers = [];
+
+                // Iterar sobre los checkboxes seleccionados
+            $("input[name='selectedGenders']:checked").each(function () {
+                // Agregar el valor (ID del género) a la lista
+                selectedGenders.push($(this).val());
+            });
+
+            $("input[name='selectedProducers']:checked").each(function () {
+                // Agregar el valor (ID del género) a la lista
+                selectedProducers.push($(this).val());
+            });
+
+                // Agregar la lista al campo oculto en el formulario
+                $("#GendersId").val(selectedGenders);
+            $("#ProducersId").val(selectedProducers);
+
+                // Enviar el formulario
+                this.submit();
+            });
+        });
+    </script>

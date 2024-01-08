@@ -2,33 +2,42 @@
 @using Itlaflix.Core.Application.ViewModel.gender;
 @model List<GenderViewModel>
 @{
-    ViewData["Title"] = "Genders";
+    ViewData["Title"] = "Generos";
 }
 
 <div class="container-fluid">
+    <div class="w-75 mb-3">
     <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
         <a asp-controller="Gender" asp-action="Create" type="button" class="btn btn-outline-success">Agregar un nuevo genero</a>
-
+</div>
+    </div>
+    <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
+            
         @if (Model == null || Model.Count == 0)
         {
-            <h2>No hay genders agregadas</h2>
+            <h2>No hay genderos agregados</h2>
         }
         else
         {
             @foreach (Itlaflix.Core.Application.ViewModel.gender.GenderViewModel item in Model)
             {
+
                 <div class="col">
-                    <div class="card shadow-sm">
-
+                    <div class="card shadow-sm text-center">
+                        <div class="card-body">
+                            <h5 class="card-title">@item.Name</h5>
+                            @{int id = item.Id;}
                             <div>
-                                <a asp-controller="Gender" asp-action="Delete" asp-all-route-id="@item.Id" type="button" class=" btn btn-outline-danger">Eliminar</a>
-                                <a asp-controller="Gender" asp-action="Edit" asp-all-route-id="@item.Id" type=" button" class=" btn btn-outline-warning">Editar</a>
-                             </div>
-                            
+                                <a asp-controller="Gender" asp-action="ProductedGenders" asp-route-id="@id" type="button" class="btn btn-outline-primary">Ver</a>
+                                <a asp-controller="Gender" asp-action="Delete" asp-route-id="@id" type="button" class=" btn btn-outline-danger">Eliminar</a>
+                                <a asp-controller="Gender" asp-action="Edit" asp-route-id="@id" type=" button" class=" btn btn-outline-warning">Editar</a>
+                            </div>
                         </div>
-                </div>
+                    </div>
+               </div>
+                
             }
-        }
-
+                }
+            
     </div>
 </div>

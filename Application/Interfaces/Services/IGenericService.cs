@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Itlaflix.Core.Application.ViewModel.director;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -22,6 +23,10 @@ namespace Itlaflix.Core.Application.Interfaces.Services
 
         // Método asincrónico para obtener una entidad y mapearla a un SaveViewModel por su identificador.
         Task<SaveViewModel> GetByIdSaveViewModel(int id);
+
+        // Método asincrónico para obtener una entidad y mapearla a un ViewModel por su identificador.
+        public Task<ViewModel> GetByIdViewModel(int id);
+
 
         // Método asincrónico para obtener todas las entidades y mapearlas a ViewModel.
         Task<List<ViewModel>> GetAllViewModel();

@@ -19,4 +19,8 @@
     <ProjectReference Include="..\Itlaflix.core.domain\Itlaflix.Core.Domain.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Desing pattrerns\" />
+  </ItemGroup>
+
 </Project>

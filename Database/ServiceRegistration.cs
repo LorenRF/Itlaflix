@@ -40,9 +40,10 @@ namespace Itlaflix.Infrastructure.Persistence
             services.AddTransient<ISeasonRepository, SeasonRepository>();
             services.AddTransient<IProducerRepository, ProducerRepository>();
             services.AddTransient<IEpisodeRepository, EpisodesRepository>();
-
-
-
+            services.AddTransient<IProducerMovieRepository, ProducerMovieRepository>();
+            services.AddTransient<IMovieGenderRepository, MovieGenderRepository>();
+            services.AddTransient<ISerieGenderRepository, SerieGenderRepository>();
+            services.AddTransient<IProducerSerieRepository, ProducerSerieRepository>();
 
             #endregion
         }

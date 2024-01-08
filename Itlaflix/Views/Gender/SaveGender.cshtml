@@ -4,7 +4,7 @@
 
 @{
     bool editMode = Model.Id == 0 ? false : true;  // Determina si la vista está en modo de edición o creación
-    ViewData["Title"] = "Genders";  // Establece el título de la vista
+    ViewData["Title"] = "Generos";  // Establece el título de la vista
 }
 
 <div class="card">
@@ -23,8 +23,9 @@
             <!-- Campo oculto para el Id -->
             <input type="hidden" asp-for="Id" />
 
-            <!-- Botones para guardar y volver -->
+            
             <button type="submit" class="btn btn-outline-primary float-end">Guardar</button>
+            <!-- Botones para guardar y volver -->
             <a asp-controller="Gender" asp-action="Index" class="btn btn-outline-success">Volver</a>
         </form>
     </div>
