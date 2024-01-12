@@ -104,7 +104,7 @@ namespace Itlaflix.Core.Application.Services
 
         public async Task<List<GenderViewModel>> GetAllViewModel()
         {
-            var genderList = await _genderRepository.GetAllAsync();
+            var genderList = await _genderRepository.GetAllWithIncludeAsync(new List<string> { "SerieGenders", "MovieGenders" });
 
             return genderList.Select(gender => new GenderViewModel
             {

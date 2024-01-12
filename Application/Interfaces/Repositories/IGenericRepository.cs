@@ -20,6 +20,8 @@ namespace Itlaflix.Core.Application.Interfaces.Repositories
 
         // Método asincrónico para obtener todas las entidades de la base de datos.
         Task<List<Entity>> GetAllAsync();
+        // Método asincrónico para obtener todas las entidades de la base de datos incluyendo a las relaciones de estas.
+        Task<List<Entity>> GetAllWithIncludeAsync(List<string> propierties);
 
         // Método asincrónico para obtener una entidad por su identificador.
         Task<Entity> GetByIdAsync(int id);

@@ -47,10 +47,12 @@
                         </li>
                     </ul>
                 </div>
-                <form class="d-flex" role="search">
-                    <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+@*                 el atributo name se enlaza a la propiedad de la clase filtred con el mismo nombre
+ *@                <form method="post" asp-controller="Home" asp-action="Index" class="d-flex" role="search">
+                    <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search" name="Name">
                     <button class="btn btn-outline-success" type="submit">Search</button>
                 </form>
+
             </div>
         </nav>
     </header>

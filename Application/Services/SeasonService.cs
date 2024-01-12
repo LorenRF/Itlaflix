@@ -14,7 +14,8 @@ namespace Itlaflix.Core.Application.Services
         private readonly IEpisodeService _episodeService;
 
 
-        public SeasonService(ISeasonRepository seasonRepository, ISerieRepository serieRepository, IEpisodeService episodeService)
+        public SeasonService(ISeasonRepository seasonRepository, ISerieRepository serieRepository
+            , IEpisodeService episodeService)
         {
             _seasonRepository = seasonRepository;
             _serieRepository = serieRepository;
@@ -64,7 +65,7 @@ namespace Itlaflix.Core.Application.Services
 
         public async Task<List<SeasonViewModel>> GetAllViewModel()
         {
-            var seasonList = await _seasonRepository.GetAllAsync();
+            var seasonList = await _seasonRepository.GetAllWithIncludeAsync(new List<string> { "Episodes" });
 
             var seasonViewModels = new List<SeasonViewModel>();
 
@@ -78,11 +79,13 @@ namespace Itlaflix.Core.Application.Services
                     Serie = serie,
                     SerieId = season.SerieId,
                     Id = season.Id,
-                    Episodes = await _episodeService.GetAllEpisodes()
+                    Episodes = season.Episodes
             };
 
                 seasonViewModels.Add(seasonViewModel);
             }
+
+
 
             return seasonViewModels;
         }
@@ -96,6 +99,7 @@ namespace Itlaflix.Core.Application.Services
             vm.SeasonNumber = season.SeasonNumber;
             vm.Serie = season.Serie;
             vm.SerieId = season.SerieId;
+            vm.Episodes = await _episodeService.GetAllEpisodes();
             vm.Id = season.Id;
 
             return vm;

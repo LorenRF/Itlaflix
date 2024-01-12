@@ -71,11 +71,28 @@ namespace Itlaflix.Infrastructure.Persistence.Repositories
             return await _dbContext.Set<Entity>().AsNoTracking().ToListAsync();
         }
 
+        // Método para obtener todas las entidades de un tipo desde la base de datos incliyendo sus relaciones con otras entidades
+        public async Task<List<Entity>> GetAllWithIncludeAsync(List<string> propierties)
+        {
+            // Utiliza el DbSet del contexto para obtener todas las entidades
+            // sin convertirlas en una lista para que el query no se ejecute en la bd
+            var query = _dbContext.Set<Entity>().AsQueryable();
+
+            foreach(var property in propierties)
+            {
+                query = query.Include(property);
+            }
+
+            // Utiliza el DbSet del contexto para obtener todas las entidades y las convierte a una lista
+            return await query.ToListAsync();
+        }
+
         // Método para obtener una entidad por su Id desde la base de datos
         public async Task<Entity> GetByIdAsync(int id)
         {
             // Utiliza el DbSet del contexto para encontrar una entidad por su Id
             return await _dbContext.Set<Entity>().FindAsync(id);
         }
+
     }
 }

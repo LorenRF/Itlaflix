@@ -106,7 +106,7 @@ namespace Itlaflix.Core.Application.Services
 
         public async Task<List<ProducerViewModel>> GetAllViewModel()
         {
-            var producerList = await _producerRepository.GetAllAsync();
+            var producerList = await _producerRepository.GetAllWithIncludeAsync(new List<string> { "ProducerSeries", "ProducerMovies" });
 
             return producerList.Select(producer => new ProducerViewModel
             {

@@ -26,5 +26,7 @@ namespace Itlaflix.Core.Application.Interfaces.Services
         // utilizados para presentar información (mostrar detalles de una serie).
 
         // Esta separación ayuda a mantener un diseño más limpio y modular, facilitando la expansión y mantenimiento del código.
+
+        Task<List<SerieViewModel>> filtredAllViewModel(FilterSeriesViewModel filter);
     }
 }

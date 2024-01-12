@@ -6,12 +6,10 @@
 }
 
 <div class="container-fluid">
-    <div class="w-75 mb-3">
-      <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
+    <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
         <a asp-controller="Episode" asp-action="Create" type="button" class="btn btn-outline-success">Agregar un nuevo episodio</a>
     </div>
 </div>
-<div class="w-75 mb-3">
         <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
 
         @if (Model == null || Model.Count == 0)

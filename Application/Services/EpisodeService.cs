@@ -6,6 +6,7 @@ using Itlaflix.Core.Domain.Entities;
 using System.Xml.Linq;
 using System;
 using Itlaflix.Core.Application.ViewModel.movie;
+using Itlaflix.Core.Application.ViewModel.season;
 
 namespace Itlaflix.Core.Application.Services
 {
@@ -97,7 +98,30 @@ namespace Itlaflix.Core.Application.Services
 
         public async Task<List<Episode>> GetAllEpisodes()
         {
-            return await _episodeRepository.GetAllAsync();
+            var episodes =await _episodeRepository.GetAllAsync();
+            foreach(Episode episode in episodes)
+            {
+                episode.Season = await _seasonRepository.GetByIdAsync(episode.SeasonId);
+            }
+
+            episodes.OrderByDescending(e => e.episodeNumber).ToList();
+
+            return episodes;
+        }
+
+        public async Task<List<Episode>> GetSeasonEpisodes(int seasonID)
+        {
+            var episodes = await _episodeRepository.GetAllAsync();
+            foreach (Episode episode in episodes)
+            {
+                episode.Season = await _seasonRepository.GetByIdAsync(episode.SeasonId);
+            }
+
+            var seasonEpisode = episodes.Where(e => e.SeasonId == seasonID).ToList();
+
+            seasonEpisode.OrderByDescending(e => e.episodeNumber).ToList();
+
+            return seasonEpisode;
         }
 
 

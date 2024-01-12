@@ -11,5 +11,6 @@ namespace Itlaflix.Core.Application.Interfaces.Services
     public interface IEpisodeService : IGenericService<SaveEpisodeViewModel, EpisodeViewModel>
     {
         Task<List<Episode>> GetAllEpisodes();
+        Task<List<Episode>> GetSeasonEpisodes(int seasonID);
     }
 }

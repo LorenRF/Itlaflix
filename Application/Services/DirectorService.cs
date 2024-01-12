@@ -72,15 +72,13 @@ namespace Itlaflix.Core.Application.Services
 
         public async Task<List<DirectorViewModel>> GetAllViewModel()
         {
-            var directorList = await _directorRepository.GetAllAsync();
-            List<Serie> directedSeries = await _SerieRepository.GetAllAsync();
-            List<Movie> directedMovies = await _MovieRepository.GetAllAsync();
+            var directorList = await _directorRepository.GetAllWithIncludeAsync(new List<string> { "DirectedSeries", "DirectedMovies" });
 
             return directorList.Select(director => new DirectorViewModel
             {
                 Name = director.Name,
-                DirectedSeries = directedSeries.Where(d => d.directorId == director.Id).ToList(),
-                DirectedMovies = directedMovies.Where(d => d.directorId == director.Id).ToList(),
+                DirectedSeries = director.DirectedSeries.ToList(),
+                DirectedMovies = director.DirectedMovies.ToList(),
                 Id = director.Id
 
             }).ToList();

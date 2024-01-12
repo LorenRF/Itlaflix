@@ -20,7 +20,8 @@ namespace Itlaflix.Controllers
         private readonly ISeasonService _seasonService;
 
         // Constructor que recibe instancias de los servicios como dependencias
-        public SerieController(ISerieService serieService, IDirectorService directorService, IGenderService genderService, IProducerService producerService, ISeasonService seasonService)
+        public SerieController(ISerieService serieService, IDirectorService directorService
+            , IGenderService genderService, IProducerService producerService, ISeasonService seasonService)
         {
             _serieService = serieService;
             _directorService = directorService;

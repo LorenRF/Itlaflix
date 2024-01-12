@@ -1,6 +1,5 @@
 ﻿using Itlaflix.Core.Application.Interfaces.Repositories;
 using Itlaflix.Core.Application.Interfaces.Services;
-using Itlaflix.Core.Application.ViewModel.movie;
 using Itlaflix.Core.Application.ViewModel.serie;
 using Itlaflix.Core.Domain.Entities;
 using System.IO;
@@ -17,13 +16,15 @@ namespace Itlaflix.Core.Application.Services
         private readonly ISerieGenderRepository _serieGenderRepository;
         private readonly IProducerSerieRepository _producerSerieRepository;
 
-        public SerieService(ISerieRepository serieRepository, IDirectorRepository directorRepository, IProducerRepository producerRepository, IGenderRepository genderRepository, ISerieGenderRepository movieGenderRepository, IProducerSerieRepository producerMovieRepository)
+        public SerieService(ISerieRepository serieRepository, IDirectorRepository directorRepository
+            , IProducerRepository producerRepository, IGenderRepository genderRepository
+            , ISerieGenderRepository serieGenderRepository, IProducerSerieRepository producerMovieRepository)
         {
             _serieRepository = serieRepository;
             _directorRepository = directorRepository;
             _producerRepository = producerRepository;
             _genderRepository = genderRepository;
-            _serieGenderRepository = movieGenderRepository;
+            _serieGenderRepository = serieGenderRepository;
             _producerSerieRepository = producerMovieRepository;
         }
         // Método para agregar una nueva serie utilizando los datos proporcionados por la vista.
@@ -62,6 +63,7 @@ namespace Itlaflix.Core.Application.Services
             serie.year = vm.year;
             serie.ProducerSerie = producersCollection;
             serie.SerieGenders = gendersCollection;
+            serie.director = director;
 
             // Llamar al método de repositorio para agregar la nueva serie a la base de datos.
             await _serieRepository.AssAsync(serie);
@@ -170,42 +172,41 @@ namespace Itlaflix.Core.Application.Services
 
         public async Task<SerieViewModel> GetByIdViewModel(int id)
         {
-            //// Obtener la serie por su identificador.
-            //var serie = await _serieRepository.GetByIdAsync(id);
-            //List<MovieGender> movieGenders = await _serieGenderRepository.GetAllAsync();
-            //List<ProducerMovie> producerMovies = await _producerSerieRepository.GetAllAsync();
-            //List<ProducerMovie> producers = new List<ProducerMovie>();
+            // Obtener la serie por su identificador.
+            var serie = await _serieRepository.GetByIdAsync(id);
+            List<SerieGender> serieGenders = await _serieGenderRepository.GetAllAsync();
+            List<ProducerSerie> producerSeries = await _producerSerieRepository.GetAllAsync();
+            List<ProducerSerie> producers = new List<ProducerSerie>();
 
 
-            //foreach (var producer in producerMovies)
-            //{
-            //    producers.Add(producer);
-            //}
+            foreach (var producer in producerSeries)
+            {
+                producers.Add(producer);
+            }
 
-            //var gender = await _genderRepository.GetByIdAsync(id);
-            //List<MovieGender> genderMovies = await _seriegenderRepository.GetAllAsync();
+            var gender = await _genderRepository.GetByIdAsync(id);
+            List<SerieGender> genderSeries = await _serieGenderRepository.GetAllAsync();
 
 
 
-            //SerieViewModel vm = new();
-            //vm.Name = serie.Name;
-            //vm.Description = serie.Description;
-            //vm.image = serie.imagePath;
-            //vm.year = serie.year;
-            //vm.Producer = producers;
-            //vm.Id = serie.Id;
-            //vm.MovieGenders = (List<MovieGender>)genderMovies.Where(g => g.GenderId == gender.Id);
+            SerieViewModel vm = new();
+            vm.Name = serie.Name;
+            vm.Description = serie.Description;
+            vm.image = serie.imagePath;
+            vm.year = serie.year;
+            vm.Producer = producers;
+            vm.Id = serie.Id;
+            vm.SerieGenders = (List<SerieGender>)genderSeries.Where(g => g.GenderId == gender.Id);
 
-            //return vm;
+            return vm;
 
-            return null;
         }
 
         // Método para obtener una lista de objetos SerieViewModel con información de todas las series.
         public async Task<List<SerieViewModel>> GetAllViewModel()
         {
             // Obtener la lista de todas las series desde el repositorio.
-            var serieList = await _serieRepository.GetAllAsync();
+            var serieList = await _serieRepository.GetAllWithIncludeAsync(new List<string> { "Seasons" });
 
             // Mapear la lista de series a una lista de SerieViewModel.
             return serieList.Select(serie => new SerieViewModel
@@ -217,9 +218,43 @@ namespace Itlaflix.Core.Application.Services
                 year = serie.year,
                 Producer = serie.ProducerSerie,
                 Gender = serie.SerieGenders,
-                Id = serie.Id
+                Id = serie.Id,
+                Seasons = serie.Seasons
+
             }).ToList();
         
     }
+        public async Task<List<SerieViewModel>> filtredAllViewModel(FilterSeriesViewModel filter)
+        {
+            // Obtener la lista de todas las series desde el repositorio.
+            var serieList = await _serieRepository.GetAllWithIncludeAsync(new List<string> { "Seasons" });
+
+            // Mapear la lista de series a una lista de SerieViewModel.
+            var listviewmodel = serieList.Select(serie => new SerieViewModel
+            {
+                Name = serie.Name,
+                Description = serie.Description,
+                director = serie.director,
+                image = serie.imagePath,
+                year = serie.year,
+                Producer = serie.ProducerSerie,
+                Gender = serie.SerieGenders,
+                Id = serie.Id,
+                Seasons = serie.Seasons
+
+            }).ToList();
+
+            if(filter.GenderId != null)
+            {
+                listviewmodel = listviewmodel.Where(serie => serie.Gender.Any(g => g.GenderId == filter.GenderId.Value)).ToList();
+            }
+            else if (filter.Name != null)
+            {
+                listviewmodel = listviewmodel.Where(serie => serie.Name.IndexOf(filter.Name, StringComparison.OrdinalIgnoreCase) >= 0).ToList();
+            }
+
+            return listviewmodel;
+
+        }
     }
 }

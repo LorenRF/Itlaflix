@@ -9,6 +9,7 @@
 }
 
 <div class="container-fluid">
+   
     @foreach (SeasonViewModel seasonViewModel in Model)
     {
         <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
@@ -23,7 +24,7 @@
                         <div class="carousel-inner" role="listbox">
                             <div id="carouselExampleAutoplaying" class="carousel slide text-center" data-bs-ride="carousel">
                                 <div class="carousel-inner">
-                                    @if (seasonViewModel.Episodes.Where(e => e.SeasonId == seasonViewModel.Id) == null || seasonViewModel.Episodes.Count == 0)
+                                    @if (seasonViewModel.Episodes.Where(e => e.Season.SeasonNumber == seasonViewModel.SeasonNumber) == null || seasonViewModel.Episodes.Count == 0)
                                     {
                                         <h2>No hay Episodios agregados</h2>
                                     }
@@ -31,7 +32,7 @@
                                     {
                                         string a = "active";
                                         int i = 0;
-                                        @foreach (Episode item in seasonViewModel.Episodes.Where(e => e.SeasonId == seasonViewModel.Id))
+                                        @foreach (Episode item in seasonViewModel.Episodes.Where(e => e.Season.SeasonNumber == seasonViewModel.SeasonNumber))
                                         {
                                             i++;
                                             if (i > 1)
@@ -51,7 +52,7 @@
                                                             <h4>@item.Name</h4>
                                                             <p class="card-text">@item.Description</p>
                                                             <div class="">
-                                                                <small class="fw-bold fs-6">@item.ReleaseDate</small>
+                                                                <small class="fw-bold fs-6">@item.SeasonId</small>
                                                             </div>
                                                         </div>
                                                     </div>
@@ -60,11 +61,11 @@
                                         }
                                     }
                                 </div>
-                                <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleAutoplaying" data-bs-slide="prev">
+                                <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleAutoplaying" data-bs-slide="prev" Style ="background-color: darkgrey;">
                                     <span class="carousel-control-prev-icon" aria-hidden="true"></span>
                                     <span class="visually-hidden">Previous</span>
                                 </button>
-                                <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleAutoplaying" data-bs-slide="next">
+                                <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleAutoplaying" data-bs-slide="next" Style="background-color: darkgrey;">
                                     <span class="carousel-control-next-icon" aria-hidden="true"></span>
                                     <span class="visually-hidden">Next</span>
                                 </button>
@@ -190,4 +191,6 @@ myCarousel.forEach((el) => {
         next = next.nextElementSibling
     }
 })
+
+
 </script>

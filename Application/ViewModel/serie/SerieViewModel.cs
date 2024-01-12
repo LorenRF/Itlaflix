@@ -24,12 +24,13 @@ namespace Itlaflix.Core.Application.ViewModel.serie
         public int year { get; set; }
 
         // Número de temporadas de la serie.
-        public int Seasons { get; set; }
+        public ICollection<Season> Seasons { get; set; }
 
         // Director de la serie.
         public Director director { get; set; }
 
         // Productores asociados a la serie.
         public ICollection<ProducerSerie> Producer { get; set; }
+        public ICollection<SerieGender> SerieGenders { get; set; }
     }
 }

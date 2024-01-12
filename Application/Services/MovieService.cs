@@ -3,6 +3,7 @@ using Itlaflix.Core.Application.Interfaces.Services;
 using Itlaflix.Core.Application.ViewModel;
 using Itlaflix.Core.Application.ViewModel.director;
 using Itlaflix.Core.Application.ViewModel.movie;
+using Itlaflix.Core.Application.ViewModel.serie;
 using Itlaflix.Core.Domain.Entities;
 
 namespace Itlaflix.Core.Application.Services
@@ -207,7 +208,7 @@ namespace Itlaflix.Core.Application.Services
 
         public async Task<List<MovieViewModel>> GetAllViewModel()
         {
-            var movieList = await _movieRepository.GetAllAsync();
+            var movieList = await _movieRepository.GetAllWithIncludeAsync(new List<string> { "ProducerMovies", "MovieGenders" });
 
             return movieList.Select(movie => new MovieViewModel
             {
@@ -223,6 +224,40 @@ namespace Itlaflix.Core.Application.Services
 
 
             }).ToList();
+        }
+
+        public async Task<List<MovieViewModel>> filtredAllViewModel(FilterMoviesViewModel filter)
+        {
+            // Obtener la lista de todas las series desde el repositorio.
+            var movieList = await _movieRepository.GetAllWithIncludeAsync(new List<string> { "ProducerMovies", "MovieGenders" });
+
+            // Mapear la lista de series a una lista de SerieViewModel.
+            var listviewmodel = movieList.Select(movie => new MovieViewModel
+            {
+                Name = movie.Name,
+                Description = movie.Description,
+                director = movie.director,
+                imagePath = movie.imagePath,
+                year = movie.year,
+                ProducerMovies = movie.ProducerMovies,
+                MovieGenders = movie.MovieGenders,
+                url = movie.url,
+                Id = movie.Id
+
+
+            }).ToList();
+
+            if (filter.GenderId != null)
+            {
+                listviewmodel = listviewmodel.Where(movie => movie.MovieGenders.Any(g => g.GenderId == filter.GenderId.Value)).ToList();
+            }
+            else if(filter.Name != null)
+            {
+                listviewmodel = listviewmodel.Where(movie => movie.Name.IndexOf(filter.Name, StringComparison.OrdinalIgnoreCase) >= 0).ToList();
+            }
+
+            return listviewmodel;
+
         }
     }
 }
